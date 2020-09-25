@@ -1,0 +1,5 @@
+Test,TESTCASES,Expected Result,Actual result,Conclusion,,
+Saving an alarm in csv file,No existing csv file,Saves data to file,"Doesn’t save, doesn’t create csv file","Code is wrong, test failed",,
+,Csv file exists,Saves data to file,Data saves file,Test pass,,
+Validating alarm time,Input foobar,Return user to ask for time,Input is valid,"Fix our validation, test failed",,
+,Input 10am,Input is valid,Returns user to ask for time,"Fix our validation, test failed",,
