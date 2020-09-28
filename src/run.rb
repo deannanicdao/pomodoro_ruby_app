@@ -2,6 +2,7 @@ require_relative './task_manager.rb'
 require_relative './timer.rb'
 
 timers  = []
+chosen_timer = []
 
 loop do
     puts "Welcome to PomodoroPalTM"
@@ -18,33 +19,47 @@ loop do
 
     case option
     when "1"
-        puts "Your timer settings are:"
-        puts "Work timer: #{timers[0][0]}"
-        puts "Rest timer: #{timers[0][1]}"
-        puts "Ready to begin?"
-        input = gets.chomp.upcase
-        if input == "Y"
-            countdown(timers[0][0])
-            puts "Your work timer is finished."
-            puts "Starting rest timer:"
+        puts "Which timer would you like to use?"
+        timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
+        input_timer = gets.chomp.to_i - 1
+        if timers.include?(timers.at(input_timer)) == true
+            chosen_timer << timers.at(input_timer)
+            puts "Your timer settings are:"
+            puts "Work timer: #{chosen_timer[0][0]}"
+            puts "Rest timer: #{chosen_timer[0][1]}"
+            puts "Ready to begin?"
+            input = gets.chomp.upcase
+            if input == "Y"
+                countdown(chosen_timer[0][0])
+                puts "Your work timer is finished."
+                puts "Starting rest timer:"
 
-            countdown(timers[0][1])
-            puts "Your session has ended"
-            puts "Would you like to:"
-            puts "(a) return to menu"
-            puts "(b) exit"
+                countdown(chosen_timer[0][1])
+                puts "Your session has ended"
+                puts "Would you like to:"
+                puts "(a) return to menu"
+                puts "(b) exit"
 
-            if input == "a"
+                if input == "a"
+                    chosen_timer = []
+                    next
+                elsif input == "b"
+                    chosen_timer = []
+                    exit
+                else
+                    puts "Please select a valid option: 'a' or 'b'"
+                end
+            elsif input == "N"
+                chosen_timer = []
                 next
-            elsif input == "b"
-                exit
             else
-                puts "Please select a valid option: 'a' or 'b'"
+                puts "Please select 'Y' or 'N'"
             end
-        elsif input == "N"
-            next
-        else input
-            puts "Please select 'Y' or 'N'"
+        elsif timers.include?(timers.at(input_timer)) == false
+            puts "Invalid number. Please enter a number from the list."
+            redo
+        else
+            puts "Invalid input. Please enter a number from the list."
         end
     when "2"
         puts "What would you like to do?"
@@ -58,9 +73,9 @@ loop do
 
         when "1"
             puts "Work timer:"
-            work_timer = gets.chomp.to_i * 2
+            work_timer = gets.chomp.to_i * 60
             puts "Rest timer:"
-            rest_timer = gets.chomp.to_i * 2
+            rest_timer = gets.chomp.to_i * 60
             timers << [work_timer, rest_timer]
             puts timers
             next  
@@ -84,14 +99,13 @@ loop do
 
             if answer == "Y"
                 timers.delete_at(input)
-                p input
             elsif answer == "N"
                 next
             elsif timers.empty? == true
                 puts "You haven't set any timers yet."
                 next
             else
-                puts "Please enter a valid timer to delete."
+                puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
                 next
             end
         end
