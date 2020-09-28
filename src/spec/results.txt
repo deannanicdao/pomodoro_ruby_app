@@ -1,0 +1,20 @@
+[31mF[0m
+
+Failures:
+
+  1) TaskManager should create a task manager
+     [31mFailure/Error: task_manager = TaskManager.new(name, task_list)[0m
+     [31m[0m
+     [31mArgumentError:[0m
+     [31m  wrong number of arguments (given 2, expected 0)[0m
+     [36m# ./spec/run_spec.rb:15:in `initialize'[0m
+     [36m# ./spec/run_spec.rb:15:in `new'[0m
+     [36m# ./spec/run_spec.rb:15:in `block (2 levels) in <top (required)>'[0m
+
+Finished in 0.00173 seconds (files took 0.102 seconds to load)
+[31m1 example, 1 failure[0m
+
+Failed examples:
+
+[31mrspec ./spec/run_spec.rb:12[0m [36m# TaskManager should create a task manager[0m
+

@@ -4,10 +4,13 @@
 # task_title
 # task_note
 
-class TaskManager
-end
+# class TaskManager
+#     def initialize(name, task_list)
+#         @name = name
+#         populate_task_list(task_list)
+#     end
+# end
 
-task_list = {}
 
 
 
