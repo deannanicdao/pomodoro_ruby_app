@@ -46,9 +46,9 @@ describe Timer do
         myTimer = Timer.new(900, 2700)
         expect(myTimer.display).to eq(nil)
     end
-    it 'should countdown' do
+    # it 'should countdown' do
         
-    end
+    # end
 end
 
 
