@@ -1,13 +1,5 @@
 require_relative './task_manager.rb'
-
-def countdown(timer)
-    time_now = Time.now.strftime("%s").to_i
-    end_time = time_now + timer
-    while time_now < end_time
-        # p time_now
-        time_now = Time.now.strftime("%s").to_i
-    end
-end
+require_relative './timer.rb'
 
 timers  = []
 
@@ -73,20 +65,39 @@ loop do
             puts timers
             next  
         when "2"
-            puts "Here are your current timers"
-            timers.each_with_index {|timer, index| puts "#{index+1}: #{timer}"}
-            next
+            if timers.empty? == false
+                puts "Here are your current timers:"
+                timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
+                next
+            else timers.empty? == true
+                puts "You haven't set any timers yet."
+                next
+            end
         when "3"
             puts "Choose a timer to delete"
-            timers.each_with_index {|timer, index| puts "#{index+1}: #{timer}"}
+            timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
+            input = gets.chomp.to_i - 1
 
-            input = gets.chomp
-            if timers.include?(input)
-                timers.delete_at(input - 1)
+            puts "Would you like to delete this timer? (Y/N)"
+            puts "Work timer: #{timers[input][0]}min | Rest timer: #{timers[input][1]}min"
+            answer = gets.chomp.upcase
+
+            if answer == "Y"
+                timers.delete_at(input)
+                p input
+            elsif answer == "N"
+                next
+            elsif timers.empty? == true
+                puts "You haven't set any timers yet."
+                next
+            else
+                puts "Please enter a valid timer to delete."
+                next
             end
-            next    
         end
+
     when "3"
+
         next
     when "4"
         next
@@ -102,7 +113,7 @@ loop do
         exit
     else
         puts
-        puts "Please select a valid option: '1', '2', '3', '4', '5' or '6'."
+        puts "Please select a valid option: '1', '2', '3', '4', '5', '6' or '7'."
         puts
     end
 end
