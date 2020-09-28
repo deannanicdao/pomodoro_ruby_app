@@ -1,9 +1,10 @@
 require_relative './task_manager.rb'
 
 def countdown(timer)
+    time_now = Time.now.strftime("%s").to_i
     end_time = time_now + timer
     while time_now < end_time
-        p time_now
+        # p time_now
         time_now = Time.now.strftime("%s").to_i
     end
 end
@@ -19,6 +20,7 @@ loop do
         puts "(4) Pick a Pal"
         puts "(5) Settings"
         puts "(6) Help"
+        puts "(7) Exit"
 
     option = gets.chomp
 
@@ -30,10 +32,11 @@ loop do
         puts "Ready to begin?"
         input = gets.chomp.upcase
         if input == "Y"
-            countdown(work_timer)
-            puts "Your work timer is finished"
-            puts "Starting rest timer"
-            countdown(rest_timer)
+            countdown(timers[0][0])
+            puts "Your work timer is finished."
+            puts "Starting rest timer:"
+
+            countdown(timers[0][1])
             puts "Your session has ended"
             puts "Would you like to:"
             puts "(a) return to menu"
@@ -63,9 +66,9 @@ loop do
 
         when "1"
             puts "Work timer:"
-            work_timer = gets.chomp.to_i * 60
+            work_timer = gets.chomp.to_i * 2
             puts "Rest timer:"
-            rest_timer = gets.chomp.to_i * 60
+            rest_timer = gets.chomp.to_i * 2
             timers << [work_timer, rest_timer]
             puts timers
             next  
@@ -94,6 +97,9 @@ loop do
     when "6"
         # puts help manual here
         next
+    when "7"
+        puts "See you next time."
+        exit
     else
         puts
         puts "Please select a valid option: '1', '2', '3', '4', '5' or '6'."
