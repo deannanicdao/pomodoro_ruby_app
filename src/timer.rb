@@ -9,8 +9,12 @@ end
 def countdown(timer)
     time_now = Time.now.strftime("%s").to_i
     end_time = time_now + timer
+    tick = 0
     while time_now < end_time
         # p time_now
+        sleep(1)
+        tick += 1
+        puts tick
         time_now = Time.now.strftime("%s").to_i
     end
 end

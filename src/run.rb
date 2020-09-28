@@ -18,29 +18,34 @@ loop do
 
     case option
     when "1"
-        puts "Your timer settings are:"
-        puts "Work timer: #{timers[0][0]}"
-        puts "Rest timer: #{timers[0][1]}"
-        puts "Ready to begin?"
-        input = gets.chomp.upcase
-        if input == "Y"
-            countdown(timers[0][0])
-            puts "Your work timer is finished."
-            puts "Starting rest timer:"
+        if timers.empty? == true
+            puts "You haven't set any timers yet."
+            next
+        end 
+            puts "Your timer settings are:"
+            puts "Work timer: #{timers[0][0]}"
+            puts "Rest timer: #{timers[0][1]}"
+            puts "Ready to begin? (Y/N)"
+            input = gets.chomp.upcase
+            if input == "Y"
+                countdown(timers[0][0])
+                puts "Your work timer is finished."
 
-            countdown(timers[0][1])
-            puts "Your session has ended"
-            puts "Would you like to:"
-            puts "(a) return to menu"
-            puts "(b) exit"
+                puts "Starting rest timer:"
+                countdown(timers[0][1])
+                puts "Your session has ended"
+                puts "Would you like to:"
+                puts "(a) return to menu"
+                puts "(b) exit"
 
-            if input == "a"
-                next
-            elsif input == "b"
-                exit
-            else
-                puts "Please select a valid option: 'a' or 'b'"
-            end
+                input = gets.chomp
+                if input == "a"
+                    next
+                elsif input == "b"
+                    exit
+                else
+                    puts "Please select a valid option: 'a' or 'b'"
+                end
         elsif input == "N"
             next
         else input
@@ -58,9 +63,9 @@ loop do
 
         when "1"
             puts "Work timer:"
-            work_timer = gets.chomp.to_i * 2
+            work_timer = gets.chomp.to_i * 60
             puts "Rest timer:"
-            rest_timer = gets.chomp.to_i * 2
+            rest_timer = gets.chomp.to_i * 60
             timers << [work_timer, rest_timer]
             puts timers
             next  
