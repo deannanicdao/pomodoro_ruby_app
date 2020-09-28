@@ -23,54 +23,81 @@ loop do
     option = gets.chomp
 
     case option
-        when "1"
+    when "1"
+        puts "Your timer settings are:"
+        puts "Work timer: #{timers[0][0]}"
+        puts "Rest timer: #{timers[0][1]}"
+        puts "Ready to begin?"
+        input = gets.chomp.upcase
+        if input == "Y"
             countdown(work_timer)
             puts "Your work timer is finished"
             puts "Starting rest timer"
             countdown(rest_timer)
             puts "Your session has ended"
+            puts "Would you like to:"
+            puts "(a) return to menu"
+            puts "(b) exit"
 
-            
-
-        when "2"
-            puts "What would you like to do?"
-            puts "(1) Create timers"
-            puts "(2) View timers"
-            puts "(3) Delete timers"
-            
-            option = gets.chomp
-
-            case option
-            when "1"
-                puts "Work timer:"
-                work_timer = gets.chomp.to_i * 60
-                puts "Rest timer:"
-                rest_timer = gets.chomp.to_i * 60
-                timers << work_timer, rest_timer
-
-            when "2"
-                puts "Here are your current timers"
-                timers.each_with_index {|timer, index| puts "#{index+1}: #{timer}"}
-                
-            when "3"
-                puts "Choose a timer to delete"
-                timers.each_with_index {|timer, index| puts "#{index+1}: #{timer}"}
-
-                input = gets.chomp
-                if timers.include?(input)
-                    timers.delete_at(input - 1)
-                end
-                
+            if input == "a"
+                next
+            elsif input == "b"
+                exit
+            else
+                puts "Please select a valid option: 'a' or 'b'"
             end
+        elsif input == "N"
+            next
+        else input
+            puts "Please select 'Y' or 'N'"
+        end
+    when "2"
+        puts "What would you like to do?"
+        puts "(1) Create timers"
+        puts "(2) View timers"
+        puts "(3) Delete timers"
+        
+        option = gets.chomp
+
+        case option
+
+        when "1"
+            puts "Work timer:"
+            work_timer = gets.chomp.to_i * 60
+            puts "Rest timer:"
+            rest_timer = gets.chomp.to_i * 60
+            timers << [work_timer, rest_timer]
+            puts timers
+            next  
+        when "2"
+            puts "Here are your current timers"
+            timers.each_with_index {|timer, index| puts "#{index+1}: #{timer}"}
+            next
         when "3"
+            puts "Choose a timer to delete"
+            timers.each_with_index {|timer, index| puts "#{index+1}: #{timer}"}
 
-        when "4"
-
-        when "5"
-            # case for music setting
-            # case for alarm setting
-        when "6"
-            # puts help manual here
+            input = gets.chomp
+            if timers.include?(input)
+                timers.delete_at(input - 1)
+            end
+            next    
+        end
+    when "3"
+        next
+    when "4"
+        next
+    when "5"
+        # case for music setting
+        # case for alarm setting
+        next
+    when "6"
+        # puts help manual here
+        next
+    else
+        puts
+        puts "Please select a valid option: '1', '2', '3', '4', '5' or '6'."
+        puts
     end
 end
 
