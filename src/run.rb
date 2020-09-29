@@ -1,6 +1,7 @@
 require_relative './task_manager.rb'
 require_relative './timer.rb'
 
+tasks = []
 timers  = []
 chosen_timer = nil
 
@@ -12,7 +13,7 @@ loop do
     puts " "
         puts "(1) Begin Pomodoro session"
         puts "(2) Set Timers"
-        puts "(3) To-Do List"
+        puts "(3) Set Tasks"
         puts "(4) Pick a Pal"
         puts "(5) Settings"
         puts "(6) Help"
@@ -108,19 +109,82 @@ loop do
             end
         end
 
-    when "3"
+    when "3"    # TASK MANAGER
+        puts "What would you like to do?"
+            puts "(1) Create task"
+            puts "(2) View tasks"
+            puts "(3) Edit/Update tasks"
+            puts "(4) Delete tasks"
+    
+        option = gets.chomp
 
-        next
-    when "4"
-        next
-    when "5"
+        case option
+
+        when "1"
+            puts "Task title:"
+            task_title = gets.chomp
+            puts "Task note:"
+            task_note = gets.chomp
+            task_tickbox = false
+            puts "Username?"
+            username = gets.chomp.upcase
+
+            tasks << [task_title, task_note, task_tickbox, username]
+            check_task_list(tasks)
+
+            CSV.open("tasks_to_do.csv", "a", headers: true) do |csv|
+              csv << tasks
+            end
+        when "2"
+            check_task_list(tasks)
+        when "3"
+            check_task_list(tasks)
+            if tas.empty? == false
+                puts "Choose a timer to delete"
+                input_timer = gets.chomp.to_i - 1
+
+                puts "Would you like to delete this timer? (Y/N)"
+                puts "Work timer: #{timers[input_timer][0]}min | Rest timer: #{timers[input_timer][1]}min"
+                answer = gets.chomp.upcase
+
+                if answer == "Y"
+                    timers.delete_at(input_timer)
+                elsif answer == "N"
+                    next
+                else
+                    puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
+                end
+            end
+        when "4"
+            check_timer_list(timers)
+            if timers.empty? == false
+                puts "Choose a timer to delete"
+                input_timer = gets.chomp.to_i - 1
+
+                puts "Would you like to delete this timer? (Y/N)"
+                puts "Work timer: #{timers[input_timer][0]}min | Rest timer: #{timers[input_timer][1]}min"
+                answer = gets.chomp.upcase
+
+                if answer == "Y"
+                    timers.delete_at(input_timer)
+                elsif answer == "N"
+                    next
+                else
+                    puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
+                end
+            end
+        end
+        
+    when "4"    # PICK A PAL
+        
+    when "5"    # SETTINGS
         # case for music setting
         # case for alarm setting
-        next
-    when "6"
+        
+    when "6"    # HELP
         # puts help manual here
-        next
-    when "7"
+        
+    when "7"    # EXIT
         puts "See you next time."
         exit
     else

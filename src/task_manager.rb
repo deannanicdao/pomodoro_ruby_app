@@ -4,16 +4,13 @@
 # task_title
 # task_note
 
-# class TaskManager
+# class Task
 #     def initialize(name, task_list)
-#         @name = name
-#         populate_task_list(task_list)
+#         CSV.open("tasks_to_do.csv", "w", headers: true) do |csv|
+#             csv << tasks([Title, Note, Tickbox, Username])
+#           end
 #     end
 # end
-
-
-
-
 
 # def create_task
 #     puts "Please add your task title."
@@ -34,12 +31,15 @@
 #     end
 # end
 
-
-# def read_task
-# end
-
-# def update_task
-# end
-
-# def delete_task
-# end
+def check_task_list(tasks)
+    if tasks.empty? == false
+        puts "Here are your current tasks:"
+        # print csv rows
+    else tasks.empty? == true
+        puts " "
+        puts "You haven't set any tasks yet."
+        puts "Go create one under (3) Set Tasks."
+        puts " "
+        sleep(2)
+    end
+end
