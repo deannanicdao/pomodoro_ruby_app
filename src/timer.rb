@@ -11,7 +11,6 @@ def countdown(timer)
     end_time = time_now + timer
     tick = 0
     while time_now < end_time
-        # p time_now
         sleep(1)
         tick += 1
         puts "#{tick}s"
@@ -22,7 +21,7 @@ end
 def check_timer_list(timers)
     if timers.empty? == false
         puts "Here are your current timers:"
-        timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
+        timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0].to_i / 60 } min | Rest timer: #{timer[1].to_i / 60} min"}
     else timers.empty? == true
         puts " "
         puts "You haven't set any timers yet."

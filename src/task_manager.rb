@@ -41,26 +41,7 @@ def add_task(logged_in_user, user)
     end
 end
 
-# main
-puts "Username:"
-logged_in_user = gets.chomp.capitalize
 
-create_csv
-
-puts "Would you like to assign this task to (a) yourself or (b) another user?"
-input = gets.chomp.downcase
-
-if input == "a"
-    username = logged_in_user
-    new_task = Task.new(:username => logged_in_user)
-
-elsif input == "b"
-    puts "Who would you like to assign this task to?"
-    username = gets.chomp.capitalize
-    new_task = Task.new(:username => username)
-end
-
-add_task(logged_in_user, new_task)
 
 
 

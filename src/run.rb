@@ -3,23 +3,24 @@ require_relative './timer.rb'
 
 tasks = []
 timers  = []
-chosen_timer = nil
+# chosen_timer = nil
+
 
 loop do
+    system('clear')
     puts " ~ " * 20
     puts " " * 15 + "Welcome to PomodoroPal™"
     puts " ~ " * 20
 
-    username = gets.chomp.lowercase
+    # puts "Enter your name:"
+    # username = gets.chomp.lowercase
 
-    username = User.new(:username => "jeremy", :task_tickbox => false)
+    # logged_in_user = User.new(:username => username, :task_tickbox => false)
 
-    CSV.open("tasks_to_do.csv", "w", headers: true) do |csv|
-        csv << [:username, :task_title, :task_note, :task_tickbox]
-    end
+    # CSV.open("tasks_to_do.csv", "w", headers: true) do |csv|
+    #     csv << [:username, :task_title, :task_note, :task_tickbox]
+    # end
     
-
-
 
     puts " " * 10 + "What would you like to do first?"
     puts " "
@@ -33,20 +34,22 @@ loop do
     puts " ~ " * 20
     option = gets.chomp
 
+    system('clear')
+
     case option
     when "1"
         puts ""
         check_timer_list(timers)
         puts ""
         if timers.empty? == false
-            puts "Choose a timer"
+            puts "Choose a timer (enter a number)"
             input_timer = gets.chomp.to_i - 1
             if timers.include?(timers.at(input_timer)) == true
                 chosen_timer = timers.at(input_timer)
                 puts "Your timer settings are:"
-                puts "Work timer: #{chosen_timer[0]} min"
-                puts "Rest timer: #{chosen_timer[1]} min"
-                puts "Ready to begin?"
+                puts "Work timer: #{chosen_timer[0].to_i / 60 } min"
+                puts "Rest timer: #{chosen_timer[1].to_i / 60 } min"
+                puts "Ready to begin? (Y/N) "
                 input = gets.chomp.upcase
                 if input == "Y"
                     countdown(chosen_timer[0])
@@ -97,10 +100,18 @@ loop do
             rest_timer = gets.chomp.to_f * 60
             timers << [work_timer, rest_timer]
             check_timer_list(timers)
+            sleep(2)
             # next  
         when "2"
             check_timer_list(timers)
-
+            puts "press enter to return to menu"
+            input = gets
+                if input
+                    next
+                else
+                    wait
+                end
+            
         when "3"
             check_timer_list(timers)
             if timers.empty? == false
@@ -108,7 +119,7 @@ loop do
                 input_timer = gets.chomp.to_i - 1
 
                 puts "Would you like to delete this timer? (Y/N)"
-                puts "Work timer: #{timers[input_timer][0]}min | Rest timer: #{timers[input_timer][1]}min"
+                puts "Work timer: #{timers[input_timer][0].to_i / 60 } min | Rest timer: #{timers[input_timer][1].to_i / 60 } min"
                 answer = gets.chomp.upcase
 
                 if answer == "Y"
@@ -133,39 +144,70 @@ loop do
         case option
 
         when "1"
-            def create_task
-                puts "Task title:"
-                task_title += gets.chomp
-                puts "Task note:"
-                user.task_note += gets.chomp
-                task_tickbox = false
+            # main
+            puts "Username:"
+            logged_in_user = gets.chomp.capitalize
 
-                tasks << [task_title, task_note, task_tickbox, username]
-                check_task_list(tasks)
+            create_csv
 
-                CSV.open("tasks_to_do.csv", "a", headers: true) do |csv|
-                csv << tasks
+            puts "Would you like to assign this task to (a) yourself or (b) another user?"
+            input = gets.chomp.downcase
+
+            if input == "a"
+                username = logged_in_user
+                new_task = Task.new(:username => logged_in_user)
+
+            elsif input == "b"
+                puts "Who would you like to assign this task to?"
+                username = gets.chomp.capitalize
+                new_task = Task.new(:username => username)
             end
+
+            add_task(logged_in_user, new_task)
+            # def create_task
+            #     puts "Task title:"
+            #     task_title += gets.chomp
+            #     puts "Task note:"
+            #     user.task_note += gets.chomp
+            #     task_tickbox = false
+
+            #     tasks << [task_title, task_note, task_tickbox, username]
+            #     check_task_list(tasks)
+
+            #     CSV.open("tasks_to_do.csv", "a", headers: true) do |csv|
+            #     csv << tasks
+            # end
+
         when "2"
             check_task_list(tasks)
+            puts "press enter to return to menu"
+            input = gets
+                if input
+                    next
+                else
+                    wait
+                end
         when "3"
             check_task_list(tasks)
             if task.empty? == false
-                puts "Choose a timer to delete"
-                input_timer = gets.chomp.to_i - 1
+                puts "Choose a task to delete"
+                input_task = gets.chomp.to_i - 1
 
-                puts "Would you like to delete this timer? (Y/N)"
-                puts "Work timer: #{timers[input_timer][0]}min | Rest timer: #{timers[input_timer][1]}min"
+                puts "Would you like to delete this task? (Y/N)"
+                # "#{index+1}. Work timer: #{timer[0].to_i / 60 } min | Rest timer: #{timer[1].to_i / 60} min"
+                # puts "Work timer: #{timers[input_timer][0].to_i / 60 }min | Rest timer: #{timers[input_timer][1].to_i / 60 }min"
+                # puts "Timer #{timers[input_timer].to_i / 60}?"
                 answer = gets.chomp.upcase
 
                 if answer == "Y"
-                    timers.delete_at(input_timer)
+                    tasks.delete_at(input_task)
                 elsif answer == "N"
                     next
                 else
                     puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
                 end
             end
+
         when "4"
             check_timer_list(timers)
             if timers.empty? == false
@@ -184,6 +226,7 @@ loop do
                     puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
                 end
             end
+
         when "5"
             puts "Who would you like to assign this task to?"
             username = gets.chomp.lowercase
@@ -202,8 +245,6 @@ loop do
                     else
                         puts "Input invalid. Please select (Y/N)"
                     end
-            end
-
         end
         
     when "4"    # PICK A PAL
