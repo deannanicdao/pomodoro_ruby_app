@@ -19,14 +19,15 @@ loop do
 
     case option
     when "1"
-        puts "Which timer would you like to use?"
-        timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
+        check_timer_list(timers)
+        puts "Choose a timer"
         input_timer = gets.chomp.to_i - 1
+   
         if timers.include?(timers.at(input_timer)) == true
             chosen_timer = timers.at(input_timer)
             puts "Your timer settings are:"
-            puts "Work timer: #{chosen_timer[0]}"
-            puts "Rest timer: #{chosen_timer[1]}"
+            puts "Work timer: #{chosen_timer[0]} min"
+            puts "Rest timer: #{chosen_timer[1]} min"
             puts "Ready to begin?"
             input = gets.chomp.upcase
             if input == "Y"
@@ -71,17 +72,16 @@ loop do
         case option
 
         when "1"
-            puts "Work timer:"
-            work_timer = gets.chomp.to_i * 60
-            puts "Rest timer:"
-            rest_timer = gets.chomp.to_i * 60
+            puts "Work timer (min):"
+            work_timer = gets.chomp.to_f * 60
+            puts "Rest timer (min):"
+            rest_timer = gets.chomp.to_f * 60
             timers << [work_timer, rest_timer]
-            puts timers
-            next  
+            check_timer_list(timers)
+            # next  
         when "2"
-        
+            check_timer_list(timers)
 
-        check_timer_list(timers)
         when "3"
             puts "Choose a timer to delete"
             check_timer_list(timers)

@@ -14,7 +14,7 @@ def countdown(timer)
         # p time_now
         sleep(1)
         tick += 1
-        puts tick
+        puts "#{tick}s"
         time_now = Time.now.strftime("%s").to_i
     end
 end
