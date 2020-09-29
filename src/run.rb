@@ -9,6 +9,18 @@ loop do
     puts " ~ " * 20
     puts " " * 15 + "Welcome to PomodoroPal™"
     puts " ~ " * 20
+
+    username = gets.chomp.lowercase
+
+    username = User.new(:username => "jeremy", :task_tickbox => false)
+
+    CSV.open("tasks_to_do.csv", "w", headers: true) do |csv|
+        csv << [:username, :task_title, :task_note, :task_tickbox]
+    end
+    
+
+
+
     puts " " * 10 + "What would you like to do first?"
     puts " "
         puts "(1) Begin Pomodoro session"
@@ -121,25 +133,24 @@ loop do
         case option
 
         when "1"
-            puts "Task title:"
-            task_title = gets.chomp
-            puts "Task note:"
-            task_note = gets.chomp
-            task_tickbox = false
-            puts "Username?"
-            username = gets.chomp.upcase
+            def create_task
+                puts "Task title:"
+                task_title += gets.chomp
+                puts "Task note:"
+                user.task_note += gets.chomp
+                task_tickbox = false
 
-            tasks << [task_title, task_note, task_tickbox, username]
-            check_task_list(tasks)
+                tasks << [task_title, task_note, task_tickbox, username]
+                check_task_list(tasks)
 
-            CSV.open("tasks_to_do.csv", "a", headers: true) do |csv|
-              csv << tasks
+                CSV.open("tasks_to_do.csv", "a", headers: true) do |csv|
+                csv << tasks
             end
         when "2"
             check_task_list(tasks)
         when "3"
             check_task_list(tasks)
-            if tas.empty? == false
+            if task.empty? == false
                 puts "Choose a timer to delete"
                 input_timer = gets.chomp.to_i - 1
 
@@ -173,6 +184,26 @@ loop do
                     puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
                 end
             end
+        when "5"
+            puts "Who would you like to assign this task to?"
+            username = gets.chomp.lowercase
+               # if username is found in csv 
+                    # then add task with said username to csv
+                    # print csv with said username
+               # elsif username is not found in csv
+                    puts "User not found. Would you like to make a new user?"
+                    input = gets.chomp.lowercase
+                    if input == "y"
+                        puts "Username:"
+                        username = gets.chomp.lowercase
+                    elsif input == "n"
+                        puts "These are the current tasks and users."
+                        check_task_list(tasks)
+                    else
+                        puts "Input invalid. Please select (Y/N)"
+                    end
+            end
+
         end
         
     when "4"    # PICK A PAL
@@ -193,21 +224,3 @@ loop do
         puts
     end
 end
-
-# if option == "1"
-
-#     CSV.open("tasks_to_do.csv", "w", headers: true) do |csv|
-#         csv << ["Title", "Note", "Tickbox"]
-#     end
-
-#     create_task
-
-#     puts "Add another task? (Y/N)"
-#     input2 == gets.chomp.capitalize
-#         # rescue here if input is not Y/N
-
-#         if input2 == "Y"
-#             create_task
-#         end
-
-#     end
