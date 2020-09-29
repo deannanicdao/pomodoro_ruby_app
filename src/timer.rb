@@ -24,7 +24,11 @@ def check_timer_list(timers)
         puts "Here are your current timers:"
         timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
     else timers.empty? == true
+        puts " "
         puts "You haven't set any timers yet."
+        puts "Go create one under (2) Set Timers."
+        puts " "
+        sleep(2)
     end
 end
 
