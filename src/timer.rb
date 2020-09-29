@@ -19,6 +19,15 @@ def countdown(timer)
     end
 end
 
+def check_timer_list(timers)
+    if timers.empty? == false
+        puts "Here are your current timers:"
+        timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
+    else timers.empty? == true
+        puts "You haven't set any timers yet."
+    end
+end
+
 # ---- notes ----
 # %M = shows the minute of the hour
 # %S = shows the second of the minute

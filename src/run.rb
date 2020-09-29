@@ -2,6 +2,7 @@ require_relative './task_manager.rb'
 require_relative './timer.rb'
 
 timers  = []
+chosen_timer = nil
 
 loop do
     puts "Welcome to PomodoroPalTM"
@@ -18,38 +19,46 @@ loop do
 
     case option
     when "1"
-        if timers.empty? == true
-            puts "You haven't set any timers yet."
-            next
-        end 
+        puts "Which timer would you like to use?"
+        timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
+        input_timer = gets.chomp.to_i - 1
+        if timers.include?(timers.at(input_timer)) == true
+            chosen_timer = timers.at(input_timer)
             puts "Your timer settings are:"
-            puts "Work timer: #{timers[0][0]}"
-            puts "Rest timer: #{timers[0][1]}"
-            puts "Ready to begin? (Y/N)"
+            puts "Work timer: #{chosen_timer[0]}"
+            puts "Rest timer: #{chosen_timer[1]}"
+            puts "Ready to begin?"
             input = gets.chomp.upcase
             if input == "Y"
-                countdown(timers[0][0])
+                countdown(chosen_timer[0])
                 puts "Your work timer is finished."
-
                 puts "Starting rest timer:"
-                countdown(timers[0][1])
+
+                countdown(chosen_timer[1])
                 puts "Your session has ended"
                 puts "Would you like to:"
                 puts "(a) return to menu"
                 puts "(b) exit"
 
-                input = gets.chomp
                 if input == "a"
+                    chosen_timer = nil
                     next
                 elsif input == "b"
                     exit
                 else
                     puts "Please select a valid option: 'a' or 'b'"
                 end
-        elsif input == "N"
-            next
-        else input
-            puts "Please select 'Y' or 'N'"
+            elsif input == "N"
+                chosen_timer = nil
+                next
+            else
+                puts "Please select 'Y' or 'N'"
+            end
+        elsif timers.include?(timers.at(input_timer)) == false
+            puts "Invalid number. Please enter a number from the list."
+            redo
+        else
+            puts "Invalid input. Please enter a number from the list."
         end
     when "2"
         puts "What would you like to do?"
@@ -70,33 +79,27 @@ loop do
             puts timers
             next  
         when "2"
-            if timers.empty? == false
-                puts "Here are your current timers:"
-                timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
-                next
-            else timers.empty? == true
-                puts "You haven't set any timers yet."
-                next
-            end
+        
+
+        check_timer_list(timers)
         when "3"
             puts "Choose a timer to delete"
-            timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0]} min | Rest timer: #{timer[1]} min"}
-            input = gets.chomp.to_i - 1
+            check_timer_list(timers)
+            input_timer = gets.chomp.to_i - 1
 
             puts "Would you like to delete this timer? (Y/N)"
-            puts "Work timer: #{timers[input][0]}min | Rest timer: #{timers[input][1]}min"
+            puts "Work timer: #{timers[input_timer][0]}min | Rest timer: #{timers[input_timer][1]}min"
             answer = gets.chomp.upcase
 
             if answer == "Y"
-                timers.delete_at(input)
-                p input
+                timers.delete_at(input_timer)
             elsif answer == "N"
                 next
             elsif timers.empty? == true
                 puts "You haven't set any timers yet."
                 next
             else
-                puts "Please enter a valid timer to delete."
+                puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
                 next
             end
         end
