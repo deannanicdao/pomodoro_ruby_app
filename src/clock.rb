@@ -1,6 +1,21 @@
 require 'ruby2d'
+require 'tty-progressbar'
+require 'pastel'
+timer_length = 10 # min
+pastel = Pastel.new
+green = pastel.on_green(" ")
+red = pastel.on_red(" ")
+system('clear')
+bar = TTY::ProgressBar.new("Progress [:bar]", 
+    total: timer_length,
+    complete: green,
+    incomplete: red
+)
 
-
+timer_length.times do
+  sleep(1)
+  bar.advance(1)
+end
 
 # alert.volume = 100
 
