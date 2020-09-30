@@ -19,6 +19,7 @@ def countdown(timer)
 end
 
 def check_timer_list(timers)
+    system('clear')
     if timers.empty? == false
         puts "Here are your current timers:"
         timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0].to_i / 60 } min | Rest timer: #{timer[1].to_i / 60} min"}
