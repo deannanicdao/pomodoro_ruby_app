@@ -1,5 +1,14 @@
 require_relative './task_manager.rb'
 require_relative './timer.rb'
+require_relative './clock.rb'
+require 'ruby2d'
+
+menu_song = Sound.new('./Sounds/menu_music_pomodoro_pal.mp3')
+alert = Sound.new('./Sounds/tamagotchi-alert.wav')
+rest_song = Sound.new('./Sounds/rest_music_pomodoro_pal.mp3')
+option_select = Sound.new('./Sounds/menu_select_pomodoro_pal.mp3')
+death = Sound.new('./Sounds/death_pomodoro_pal.wav')
+feed = Sound.new('./Sounds/feed_pomodoro.wav')
 
 tasks = []
 timers  = []
@@ -7,6 +16,17 @@ timers  = []
 
 
 loop do
+    set title: "PomodoroPal™", background: 'blue', width: 640, height: 480, resizeable: true, borderless: false
+    alert.play
+    sleep(1)
+    # menu_song.play
+    feed.play
+    sleep(1)
+    death.play
+    sleep(1)
+
+
+
     system('clear')
     puts " ~ " * 20
     puts " " * 15 + "Welcome to PomodoroPal™"
@@ -54,8 +74,9 @@ loop do
                 if input == "Y"
                     countdown(chosen_timer[0])
                     puts "Your work timer is finished."
+                    alert.play
                     puts "Starting rest timer:"
-
+                    rest_song.play
                     countdown(chosen_timer[1])
                     puts "Your session has ended"
                     puts "Would you like to:"
@@ -264,4 +285,5 @@ loop do
         puts "Please select a valid option: '1', '2', '3', '4', '5', '6' or '7'."
         puts
     end
+    
 end
