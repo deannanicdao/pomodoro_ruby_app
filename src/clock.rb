@@ -1,16 +1,34 @@
-require 'ruby2d'
-require 'tty-progressbar'
+# require 'ruby2d'
+# require 'tty-progressbar'
 require 'pastel'
+require 'tty-box'
+
+# box = TTY::Box.frame(top: 5,
+#     left: 10,
+#     width: 30, 
+#     height: 10
+#     # title: {top_left: "PomodoroPal™", bottom_right: "v1.0"}
+# ) do
+#     puts "Welcome"
+# end
+
+# box = TTY::Box.frame(width: 30, height: 10) do
+#     "Drawin a box in terminal emulator"
+# end
+box = TTY::Box.frame "Drawing a box in", "terminal emulator", padding: 3, align: :center
+print box
+sleep(10)
+
 timer_length = 10 # min
 pastel = Pastel.new
-green = pastel.on_green(" ")
-red = pastel.on_red(" ")
+complete_bar = pastel.on_cyan(" ")
+progress_bar = pastel.on_white(" ")
 system('clear')
-bar = TTY::ProgressBar.new("Progress [:bar]", 
-    total: timer_length,
-    complete: green,
-    incomplete: red
-)
+# bar = TTY::ProgressBar.new("Progress :bar", 
+#     total: timer_length,
+#     complete: complete_bar,
+#     incomplete: progress_bar
+# )
 
 timer_length.times do
   sleep(1)
