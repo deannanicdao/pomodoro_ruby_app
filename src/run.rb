@@ -7,17 +7,14 @@ require 'ruby2d'
 # menu_song = Music.new('./Sounds/menu_music_pomodoro_pal.mp3')
 # rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
 
-# Sounds for timers #
-death = Sound.new('./Sounds/death_pomodoro_pal.wav')
-alert = Sound.new('./Sounds/tamagotchi-alert.wav')
-option_select = Sound.new('./Sounds/menu_select_pomodoro_pal.mp3')
-feed = Sound.new('./Sounds/feed_pomodoro.wav')
+
 
 
 
 tasks = []
 timers  = []
 message = "Farewell"
+seconds = 3
 # chosen_timer = nil
 
 
@@ -78,7 +75,10 @@ while option != "7"
                 puts "Rest timer: #{chosen_timer[1].to_f / 60 } min"
 
                 puts "Number of sessions:"
-                session_number = gets.chomp.to_i
+                input = gets.chomp.to_i
+                # @session = Session.new(input)
+                session = 1
+                session_total = input
                     # raise error if session_numer <= 0
                     # raise error if session_numer != Integer
                 
@@ -86,34 +86,34 @@ while option != "7"
                 input = gets.chomp.upcase
 
                 if input == "Y"
-                    session_number.times do
-                        system('clear')
-                        
+                    session_total.times do
                         # WORK TIMER SESSION
-                        puts "Starting work timer..."
-                        three_two_one
-                        # alert.play
+                        puts "Session #{session} / #{session_total}"
+                        puts "Starting work timer in..."
+                        sleep(1)
+                        loading(3)
                         countdown(chosen_timer[0])
-                        # alert.play
                         puts "Your work timer is finished"
                         sleep(1)
                         system('clear')
 
                         # REST TIMER SESSION
+                        puts "Session #{session} / #{session_total}"
                         puts "Starting rest timer in..."
-                        three_two_one
-                        # alert.play
+                        sleep(1)
+                        loading(3)
                         countdown(chosen_timer[1])
-                        # alert.play
                         puts "Your rest timer is finished"
                         sleep(1)
                         system('clear')
 
-                        session_number -= 1
-                        break if session_number == 0
+                        break if session == session_total
+                        session += 1
 
                         puts "Next session is starting in..."
-                        three_two_one
+                        sleep(1)
+                        loading(3)
+                        system('clear')
                     end
                     
                     puts "Your session has ended"
@@ -127,7 +127,7 @@ while option != "7"
                     elsif input == "b"
                         system('clear')
                         puts "#{message.to_s}!"
-                        death.play
+                        @death.play
                         sleep(1)
                         exit
                     else
@@ -160,8 +160,10 @@ while option != "7"
         when "1"
             puts "Work timer (min):"
             work_timer = gets.chomp.to_f * 60
+            #   raise error when work_timer != Integer or < 0
             puts "Rest timer (min):"
             rest_timer = gets.chomp.to_f * 60
+            #   raise error when work_timer != Integer or < 0
             timers << [work_timer, rest_timer]
             check_timer_list(timers)
             
@@ -196,7 +198,6 @@ while option != "7"
         else
             return
         end
-
     elsif option == "3"    # TASK MANAGER
         puts "What would you like to do?"
             puts "(1) Create task"
@@ -321,6 +322,8 @@ while option != "7"
         # puts help manual here
     end
 
+system('clear')
+
 puts " " * 10 + "What would you like to do?"
 puts " "
 puts "(1) Begin Pomodoro session"
@@ -338,6 +341,6 @@ end
 
 system('clear')
 puts "#{message.to_s}!"
-death.play
+@death.play
 sleep(1)
 exit
