@@ -3,62 +3,69 @@ require_relative './timer.rb'
 # require_relative './clock.rb'
 require 'ruby2d'
 
-menu_song = Music.new('./Sounds/menu_music_pomodoro_pal.mp3')
-alert = Sound.new('./Sounds/tamagotchi-alert.wav')
-rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
-option_select = Sound.new('./Sounds/menu_select_pomodoro_pal.mp3')
+# Background music #
+# menu_song = Music.new('./Sounds/menu_music_pomodoro_pal.mp3')
+# rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
+
+# Sounds for timers #
 death = Sound.new('./Sounds/death_pomodoro_pal.wav')
+alert = Sound.new('./Sounds/tamagotchi-alert.wav')
+option_select = Sound.new('./Sounds/menu_select_pomodoro_pal.mp3')
 feed = Sound.new('./Sounds/feed_pomodoro.wav')
+
+
 
 tasks = []
 timers  = []
+message = "Farewell"
 # chosen_timer = nil
 
 
-loop do
-    # set title: "PomodoroPal™", background: 'blue', width: 640, height: 480, resizeable: true, borderless: false
-    # alert.play
-    # sleep(1)
-    # # menu_song.play
-    # feed.play
-    # sleep(1)
-    # death.play
-    # sleep(1)
+
+# set title: "PomodoroPal™", background: 'blue', width: 640, height: 480, resizeable: true, borderless: false
+# alert.play
+# sleep(1)
+# # menu_song.play
+# feed.play
+# sleep(1)
+# death.play
+# sleep(1)
 
 
 
-    system('clear')
-    puts " ~ " * 20
-    puts " " * 15 + "Welcome to PomodoroPal™"
-    puts " ~ " * 20
+system('clear')
+puts " ~ " * 20
+puts " " * 15 + "Welcome to PomodoroPal™"
+puts " ~ " * 20
 
-    # puts "Enter your name:"
-    # username = gets.chomp.lowercase
+# puts "Enter your name:"
+# username = gets.chomp.lowercase
 
-    # logged_in_user = User.new(:username => username, :task_tickbox => false)
+# logged_in_user = User.new(:username => username, :task_tickbox => false)
 
-    # CSV.open("tasks_to_do.csv", "w", headers: true) do |csv|
-    #     csv << [:username, :task_title, :task_note, :task_tickbox]
-    # end
-    
+# CSV.open("tasks_to_do.csv", "w", headers: true) do |csv|
+#     csv << [:username, :task_title, :task_note, :task_tickbox]
+# end
 
-    puts " " * 10 + "What would you like to do first?"
-    puts " "
-        puts "(1) Begin Pomodoro session"
-        puts "(2) Set Timers"
-        puts "(3) Set Tasks"
-        puts "(4) Pick a Pal"
-        puts "(5) Settings"
-        puts "(6) Help"
-        puts "(7) Exit"
-    puts " ~ " * 20
-    option = gets.chomp 
 
-    system('clear')
+puts " " * 10 + "What would you like to do?"
+puts " "
+puts "(1) Begin Pomodoro session"
+puts "(2) Set Timers"
+puts "(3) Set Tasks"
+puts "(4) Pick a Pal"
+puts "(5) Settings"
+puts "(6) Help"
+puts "(7) Exit"
+puts " ~ " * 20
+option = gets.chomp 
 
-    case option
-    when "1"
-        puts ""
+system('clear')
+
+while option != "7"
+
+    if option == "1"
+        system('clear')
         check_timer_list(timers)
         puts ""
         if timers.empty? == false
@@ -72,69 +79,61 @@ loop do
 
                 puts "Number of sessions:"
                 session_number = gets.chomp.to_i
+                    # raise error if session_numer <= 0
+                    # raise error if session_numer != Integer
                 
                 puts "Ready to begin? (Y/N)"
                 input = gets.chomp.upcase
 
                 if input == "Y"
-                    while session_number > 0
-                            puts "Next session is starting in..."
-                            sleep(1)
-                            system('clear')
-                            puts "3"
-                            sleep(1)
-                            system('clear')
-                            puts "2"
-                            sleep(1)
-                            system('clear')
-                            puts "1"
-                            sleep(1)
-                            system('clear')
-                            puts "0"
-                            sleep(1)
-                            puts "Starting work timer"
-                            alert.play
-                            countdown(chosen_timer[0])
-                            alert.play
-                            puts "Your work timer is finished"
-                            sleep(1)
-                            system('clear')
-                            system('clear')
-                            puts "3"
-                            sleep(1)
-                            system('clear')
-                            puts "2"
-                            sleep(1)
-                            system('clear')
-                            puts "1"
-                            sleep(1)
-                            system('clear')
-                            puts "0"
-                            sleep(1)
-                            alert.play
-                            puts "Starting rest timer"
-                            alert.play
-                            countdown(chosen_timer[1])
-                            alert.play
-                            system('clear')
-                            session_number -= 1
-                    end
+                    session_number.times do
+                        system('clear')
+                        
+                        # WORK TIMER SESSION
+                        puts "Starting work timer..."
+                        three_two_one
+                        # alert.play
+                        countdown(chosen_timer[0])
+                        # alert.play
+                        puts "Your work timer is finished"
+                        sleep(1)
+                        system('clear')
 
+                        # REST TIMER SESSION
+                        puts "Starting rest timer in..."
+                        three_two_one
+                        # alert.play
+                        countdown(chosen_timer[1])
+                        # alert.play
+                        puts "Your rest timer is finished"
+                        sleep(1)
+                        system('clear')
+
+                        session_number -= 1
+                        break if session_number == 0
+
+                        puts "Next session is starting in..."
+                        three_two_one
+                    end
+                    
                     puts "Your session has ended"
                     puts "Would you like to:"
                     puts "(a) return to menu"
                     puts "(b) exit"
+                    input = gets.chomp
 
                     if input == "a"
                         chosen_timer = nil
-                        next
                     elsif input == "b"
-                        puts "Farewell!"
+                        system('clear')
+                        puts "#{message.to_s}!"
                         death.play
+                        sleep(1)
                         exit
                     else
                         puts "Please select a valid option: 'a' or 'b'"
                     end
+
                 elsif input == "N"
                     chosen_timer = nil
                     next
@@ -148,7 +147,7 @@ loop do
                 puts "Invalid input. Please enter a number from the list."
             end
         end
-    when "2"
+    elsif option == "2"
         puts "What would you like to do?"
         puts "(1) Create timers"
         puts "(2) View timers"
@@ -165,8 +164,7 @@ loop do
             rest_timer = gets.chomp.to_f * 60
             timers << [work_timer, rest_timer]
             check_timer_list(timers)
-            sleep(2)
-            # next  
+            
         when "2"
             check_timer_list(timers)
             puts "press enter to return to menu"
@@ -195,9 +193,11 @@ loop do
                     puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
                 end
             end
+        else
+            return
         end
 
-    when "3"    # TASK MANAGER
+    elsif option == "3"    # TASK MANAGER
         puts "What would you like to do?"
             puts "(1) Create task"
             puts "(2) View tasks"
@@ -312,22 +312,32 @@ loop do
                     end
         end
         
-    when "4"    # PICK A PAL
-        
-    when "5"    # SETTINGS
+    elsif option == "4"    # PICK A PAL
+    elsif option == "5"    # SETTINGS
         # case for music setting
         # case for alarm setting
         
-    when "6"    # HELP
+    elsif option == "6"    # HELP
         # puts help manual here
-        
-    when "7"    # EXIT
-        puts "See you next time."
-        exit
-    else
-        puts
-        puts "Please select a valid option: '1', '2', '3', '4', '5', '6' or '7'."
-        puts
     end
-    
+
+puts " " * 10 + "What would you like to do?"
+puts " "
+puts "(1) Begin Pomodoro session"
+puts "(2) Set Timers"
+puts "(3) Set Tasks"
+puts "(4) Pick a Pal"
+puts "(5) Settings"
+puts "(6) Help"
+puts "(7) Exit"
+puts " ~ " * 20
+option = gets.chomp 
+
+system('clear')
 end
+
+system('clear')
+puts "#{message.to_s}!"
+death.play
+sleep(1)
+exit

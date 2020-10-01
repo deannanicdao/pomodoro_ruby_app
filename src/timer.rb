@@ -1,6 +1,11 @@
 require 'time'
 require 'pastel'
 require 'tty-progressbar'
+require 'ruby2d'
+
+
+
+
 
 # class Music(source)
 # end
@@ -38,6 +43,24 @@ def countdown(timer)
         # end
 
     end
+    alert.play
+end
+
+def three_two_one
+    sleep(1)
+    system('clear')
+    puts "3"
+    sleep(1)
+    system('clear')
+    puts "2"
+    sleep(1)
+    system('clear')
+    puts "1"
+    sleep(1)
+    system('clear')
+    puts "0"
+    sleep(1)
+    alert.play
 end
 
 def check_timer_list(timers)
@@ -54,7 +77,7 @@ def check_timer_list(timers)
     end
 end
 
-  
+
 
 # ---- notes ----
 # %M = shows the minute of the hour
