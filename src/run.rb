@@ -210,40 +210,7 @@ while option != "7"
         case option
 
         when "1"
-            # main
-            puts "Username:"
-            logged_in_user = gets.chomp.capitalize
-
-            create_csv
-
-            puts "Would you like to assign this task to (a) yourself or (b) another user?"
-            input = gets.chomp.downcase
-
-            if input == "a"
-                username = logged_in_user
-                new_task = Task.new(:username => logged_in_user)
-
-            elsif input == "b"
-                puts "Who would you like to assign this task to?"
-                username = gets.chomp.capitalize
-                new_task = Task.new(:username => username)
-            end
-
-            add_task(logged_in_user, new_task)
-            # def create_task
-            #     puts "Task title:"
-            #     task_title += gets.chomp
-            #     puts "Task note:"
-            #     user.task_note += gets.chomp
-            #     task_tickbox = false
-
-            #     tasks << [task_title, task_note, task_tickbox, username]
-            #     check_task_list(tasks)
-
-            #     CSV.open("tasks_to_do.csv", "a", headers: true) do |csv|
-            #     csv << tasks
-            # end
-
+            
         when "2"
             check_task_list(tasks)
             puts "press enter to return to menu"
