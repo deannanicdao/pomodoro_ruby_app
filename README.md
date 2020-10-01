@@ -2,7 +2,7 @@
 
 All relevant files and directories are provided in the following GitHub repository:
 
-[link here]
+https://github.com/deannanicdao/pomodoro_ruby_app
 
 ## HELP
 
