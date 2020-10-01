@@ -133,19 +133,7 @@ loop do
         case option
 
         when "1"
-            def create_task
-                puts "Task title:"
-                task_title += gets.chomp
-                puts "Task note:"
-                user.task_note += gets.chomp
-                task_tickbox = false
-
-                tasks << [task_title, task_note, task_tickbox, username]
-                check_task_list(tasks)
-
-                CSV.open("tasks_to_do.csv", "a", headers: true) do |csv|
-                csv << tasks
-            end
+            
         when "2"
             check_task_list(tasks)
         when "3"
