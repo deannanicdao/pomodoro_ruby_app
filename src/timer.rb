@@ -1,4 +1,9 @@
 require 'time'
+require 'pastel'
+require 'tty-progressbar'
+
+# class Music(source)
+# end
 
 class Timer
     attr_accessor :work_timer, :rest_timer
@@ -14,7 +19,24 @@ def countdown(timer)
         sleep(1)
         tick += 1
         puts "#{tick}s"
+
         time_now = Time.now.strftime("%s").to_i
+        # pastel = Pastel.new
+        # complete_bar = pastel.on_cyan(" ")
+        # progress_bar = pastel.on_white(" ")
+        # system('clear')
+
+        # bar = TTY::ProgressBar.new("Progress :bar", 
+        #     total: end_time,
+        #     complete: complete_bar,
+        #     incomplete: progress_bar
+        # )
+
+        # end_time do
+        #     sleep(end_time / 60)
+        #     bar.advance(1)
+        # end
+
     end
 end
 
@@ -22,7 +44,7 @@ def check_timer_list(timers)
     system('clear')
     if timers.empty? == false
         puts "Here are your current timers:"
-        timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0].to_i / 60 } min | Rest timer: #{timer[1].to_i / 60} min"}
+        timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0].to_f / 60 } min | Rest timer: #{timer[1].to_f / 60} min"}
     else timers.empty? == true
         puts " "
         puts "You haven't set any timers yet."
@@ -31,6 +53,8 @@ def check_timer_list(timers)
         sleep(2)
     end
 end
+
+  
 
 # ---- notes ----
 # %M = shows the minute of the hour

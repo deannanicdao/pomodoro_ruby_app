@@ -1,11 +1,11 @@
 require_relative './task_manager.rb'
 require_relative './timer.rb'
-require_relative './clock.rb'
+# require_relative './clock.rb'
 require 'ruby2d'
 
-menu_song = Sound.new('./Sounds/menu_music_pomodoro_pal.mp3')
+menu_song = Music.new('./Sounds/menu_music_pomodoro_pal.mp3')
 alert = Sound.new('./Sounds/tamagotchi-alert.wav')
-rest_song = Sound.new('./Sounds/rest_music_pomodoro_pal.mp3')
+rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
 option_select = Sound.new('./Sounds/menu_select_pomodoro_pal.mp3')
 death = Sound.new('./Sounds/death_pomodoro_pal.wav')
 feed = Sound.new('./Sounds/feed_pomodoro.wav')
@@ -16,14 +16,14 @@ timers  = []
 
 
 loop do
-    set title: "PomodoroPal™", background: 'blue', width: 640, height: 480, resizeable: true, borderless: false
-    alert.play
-    sleep(1)
-    # menu_song.play
-    feed.play
-    sleep(1)
-    death.play
-    sleep(1)
+    # set title: "PomodoroPal™", background: 'blue', width: 640, height: 480, resizeable: true, borderless: false
+    # alert.play
+    # sleep(1)
+    # # menu_song.play
+    # feed.play
+    # sleep(1)
+    # death.play
+    # sleep(1)
 
 
 
@@ -52,7 +52,7 @@ loop do
         puts "(6) Help"
         puts "(7) Exit"
     puts " ~ " * 20
-    option = gets.chomp
+    option = gets.chomp 
 
     system('clear')
 
@@ -67,17 +67,59 @@ loop do
             if timers.include?(timers.at(input_timer)) == true
                 chosen_timer = timers.at(input_timer)
                 puts "Your timer settings are:"
-                puts "Work timer: #{chosen_timer[0].to_i / 60 } min"
-                puts "Rest timer: #{chosen_timer[1].to_i / 60 } min"
-                puts "Ready to begin? (Y/N) "
+                puts "Work timer: #{chosen_timer[0].to_f / 60 } min"
+                puts "Rest timer: #{chosen_timer[1].to_f / 60 } min"
+
+                puts "Number of sessions:"
+                session_number = gets.chomp.to_i
+                
+                puts "Ready to begin? (Y/N)"
                 input = gets.chomp.upcase
+
                 if input == "Y"
-                    countdown(chosen_timer[0])
-                    puts "Your work timer is finished."
-                    alert.play
-                    puts "Starting rest timer:"
-                    rest_song.play
-                    countdown(chosen_timer[1])
+                    while session_number > 0
+                            puts "Next session is starting in..."
+                            sleep(1)
+                            system('clear')
+                            puts "3"
+                            sleep(1)
+                            system('clear')
+                            puts "2"
+                            sleep(1)
+                            system('clear')
+                            puts "1"
+                            sleep(1)
+                            system('clear')
+                            puts "0"
+                            sleep(1)
+                            puts "Starting work timer"
+                            alert.play
+                            countdown(chosen_timer[0])
+                            alert.play
+                            puts "Your work timer is finished"
+                            sleep(1)
+                            system('clear')
+                            system('clear')
+                            puts "3"
+                            sleep(1)
+                            system('clear')
+                            puts "2"
+                            sleep(1)
+                            system('clear')
+                            puts "1"
+                            sleep(1)
+                            system('clear')
+                            puts "0"
+                            sleep(1)
+                            alert.play
+                            puts "Starting rest timer"
+                            alert.play
+                            countdown(chosen_timer[1])
+                            alert.play
+                            system('clear')
+                            session_number -= 1
+                    end
+
                     puts "Your session has ended"
                     puts "Would you like to:"
                     puts "(a) return to menu"
@@ -87,6 +129,8 @@ loop do
                         chosen_timer = nil
                         next
                     elsif input == "b"
+                        puts "Farewell!"
+                        death.play
                         exit
                     else
                         puts "Please select a valid option: 'a' or 'b'"
@@ -140,7 +184,7 @@ loop do
                 input_timer = gets.chomp.to_i - 1
 
                 puts "Would you like to delete this timer? (Y/N)"
-                puts "Work timer: #{timers[input_timer][0].to_i / 60 } min | Rest timer: #{timers[input_timer][1].to_i / 60 } min"
+                puts "Work timer: #{timers[input_timer][0].to_f / 60 } min | Rest timer: #{timers[input_timer][1].to_f / 60 } min"
                 answer = gets.chomp.upcase
 
                 if answer == "Y"
