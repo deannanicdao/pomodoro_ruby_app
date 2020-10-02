@@ -107,6 +107,8 @@ end
 
 def tick_task
     system('clear')
+    puts "Which task would you like to tick?"
+    tick = gets.chomp.to_i
     selected_row = CSV.read("tasks.csv")[input]
     selected_row[4] = "complete"
 end

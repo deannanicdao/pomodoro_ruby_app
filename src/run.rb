@@ -203,6 +203,14 @@ while @option != "7"
             
         when "2"    # VIEWING TASK LIST
             view_tasks(task_list)
+            puts "Tick [ x ] | Untick [ - ]"
+            option = gets.chomp.strip
+            case option
+            when "x"
+                untick_task
+            when "-"
+                tick_task
+            end
         
         when "3"    # UPDATING TASKS
             # if File.exists?("tasks.csv") && !task_list.empty? 
@@ -246,33 +254,35 @@ while @option != "7"
             end
         
         when "4"    # DELETING TASKS #
-                p view_tasks(task_list)
-                p task_list
-                puts "What task would you like to delete?"
-                input = gets.chomp.to_i
-                
-        
-                # confirm = gets.chomp.strip
-                confirm_selection(input)
+            view_tasks(task_list)
+            puts "What task would you like to delete?"
+            input = gets.chomp.to_i
                 # raise error if not integer
-                option = gets.chomp.upcase
-                case option
-                when "Y"
-                    # Opening existing csv and selecting row
-                    selected_row = CSV.read("tasks.csv")[input]
-                    headers = CSV.read("tasks.csv")[0]
-                    remaining_rows = CSV.read("tasks.csv")
-        
-                    # Deleting selected row and headers
-                    remaining_rows.delete(selected_row) # Removing a row
-                    remaining_rows.delete(headers)    # Removing headers
-                    view_tasks(task_list)
-                    
-                when "N"
-                    return
-                else
-                    puts "Please select an existing task number."
+            
+            confirm_selection(input)
+            confirm = gets.chomp.strip.upcase
+            system('clear')
+            if confirm == "Y"
+                # Opening existing csv and selecting row
+                selected_row = CSV.read("tasks.csv")[input]
+                headers = CSV.read("tasks.csv")[0]
+                remaining_rows = CSV.read("tasks.csv")
+                
+                # Editing selected row and headers
+                remaining_rows.delete(selected_row) # Removing a row
+                remaining_rows.delete(headers)    # Removing headers
+                
+                # Writing back to csv
+                CSV.open("tasks.csv", "w", headers: true) do |csv|
+                    csv << ["id", "title", "note", "user", "status"]
                 end
+                
+                CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
+                    remaining_rows.each do |array|
+                        csv << array
+                    end
+                end
+            end
         else
             puts "Please select a valid option '1', '2', '3' or '4'"
         end

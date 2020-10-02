@@ -1,3 +1,2 @@
-Title,Note,Status,User
-1,Valid title,Valid note,Deanna,incomplete
-2,Another valid title,Another valid note,Who?,incomplete
+id,title,note,user,status
+1,Go climbing,Newstead,Deanna,incomplete
