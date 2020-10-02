@@ -74,6 +74,18 @@ when "2"    # VIEWING TASK LIST
 
 when "3"    # UPDATING TASKS
     if File.exists?("test.csv")
+        # VIEWING TASK
+        task_list = []
+        index = 0
+        CSV.foreach("test.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+            task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
+        end
+        task_list.each do |task|
+            index += 1
+            puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+        end
+        # END VIEWING TASK
+
         puts "What task would you like to edit?"
         input = gets.chomp.to_i
             # raise error if not integer
@@ -97,6 +109,18 @@ when "3"    # UPDATING TASKS
                 csv << array
             end
         end
+
+        # VIEWING TASK
+        task_list = []
+        index = 0
+        CSV.foreach("test.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+            task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
+        end
+        task_list.each do |task|
+            index += 1
+            puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+        end
+        # END VIEWING TASK
     else
         puts "No tasks yet."
     end
