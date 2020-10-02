@@ -7,36 +7,27 @@ require 'ruby2d'
 # menu_song = Music.new('./Sounds/menu_music_pomodoro_pal.mp3')
 # rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
 
-
-
-
-
 tasks = []
 timers  = []
 message = "Farewell"
 seconds = 3
 # chosen_timer = nil
 
-
-
-# set title: "PomodoroPal™", background: 'blue', width: 640, height: 480, resizeable: true, borderless: false
-# alert.play
-# sleep(1)
-# # menu_song.play
-# feed.play
-# sleep(1)
-# death.play
-# sleep(1)
-
-
-
-system('clear')
-puts " ~ " * 20
-puts " " * 15 + "Welcome to PomodoroPal™"
-puts " ~ " * 20
-
-# puts "Enter your name:"
-# username = gets.chomp.lowercase
+loop do
+    puts " ~ " * 20
+    puts " " * 15 + "Welcome to PomodoroPal™"
+    puts " ~ " * 20  
+    puts " " * 10 + "What would you like to do first?"
+    puts " "
+        puts "(1) Begin Pomodoro session"
+        puts "(2) Set Timers"
+        puts "(3) Set Tasks"
+        puts "(4) Pick a Pal"
+        puts "(5) Settings"
+        puts "(6) Help"
+        puts "(7) Exit"
+    puts " ~ " * 20
+    option = gets.chomp
 
 # logged_in_user = User.new(:username => username, :task_tickbox => false)
 
