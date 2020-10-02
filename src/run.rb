@@ -177,6 +177,7 @@ while @option != "7"
             return
         end
     elsif @option == "3"    # TASK MANAGER
+        system('clear')
         puts "What would you like to do?"
         puts "(1) Create task"
         puts "(2) View tasks"

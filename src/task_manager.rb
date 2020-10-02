@@ -12,9 +12,11 @@ end
 
 # === Task methods === #
 def task_card(details)
+    system('clear')
     puts "Add a task? (Y/N)"
     task = []
     answer = gets.chomp.upcase
+
     case answer
     when "Y"
         until answer == "N" do
@@ -35,13 +37,15 @@ def task_card(details)
         answer = gets.chomp.upcase
         end
     when "N"
-        return
-    else 
+        "Returning to menu..."
+        wait       
+    else != "N" or "Y"
         puts "Please select a valid answer: 'Y' or 'N'"
     end
 end
 
 def view_tasks(task_list)
+    system('clear')
     if File.exists?("tasks.csv")
         task_list = []
         index = 0
@@ -81,6 +85,7 @@ def to_csv  # Writing back to csv
 end
 
 def confirm_selection(input)
+    system('clear')
     selected_row = CSV.read("tasks.csv")[input]
     puts "Is this the correct selection? (Y/N)"
     puts "Task: #{selected_row[1]} | Note: #{selected_row[2]} | Assigned to: #{selected_row[3]} | Status: #{selected_row[4]}"
@@ -92,4 +97,11 @@ def wait
     until input do
         next
     end
+end
+
+def tick_task
+
+end
+
+def untick_task
 end
