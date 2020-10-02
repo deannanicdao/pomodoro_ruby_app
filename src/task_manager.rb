@@ -30,7 +30,7 @@ when "1"    # ADDING NEW TASKS
             puts "Add a task? (Y/N)"
             answer = gets.chomp.upcase
             if answer == "Y"
-                current = CSV.read("test.csv")
+                current = CSV.read("tasks.csv")
                 id = current.length
                 task << id
                 details.each do |column|
@@ -39,7 +39,7 @@ when "1"    # ADDING NEW TASKS
                     task << input
                 end
                 task << "incomplete"
-                CSV.open("test.csv", "a", headers: true) do |csv|
+                CSV.open("tasks.csv", "a", headers: true) do |csv|
                     csv << task
                 end
             else answer == "N" 
@@ -48,7 +48,7 @@ when "1"    # ADDING NEW TASKS
         end
     end
 
-    if !File.exists?("test.csv")
+    if !File.exists?("tasks.csv")
         CSV.open("tasks.csv", "w", headers: true) do |csv|
                 csv << ["Title", "Note", "Status", "User"]
         end
@@ -57,33 +57,62 @@ when "1"    # ADDING NEW TASKS
         task_card(required_details)
     end
 
-when "2"    # VIEWING TASK LIST
-    if File.exists?("test.csv")
-        task_list = []
-        index = 0
-        CSV.foreach("test.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
-            task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
-        end
+    #   VIEWING TASK LIST
+    task_list = []
+    index = 0
+    CSV.foreach("tasks.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+        task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
+    end
+    if !task_list.empty? == true
+        puts "Your current task list:"
         task_list.each do |task|
             index += 1
             puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
         end
+    end
+    if task_list.empty? == true
+        puts "Your task list is empty! :o"
+        return
+    end
+    
+when "2"    # VIEWING TASK LIST
+    if File.exists?("tasks.csv")
+        task_list = []
+        index = 0
+        CSV.foreach("tasks.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+            task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
+        end
+        if !task_list.empty? == true
+            puts "Your current task list:"
+            task_list.each do |task|
+                index += 1
+                puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+            end
+        end
+        if task_list.empty? == true
+            puts "Your task list is empty! :o"
+            return
+        end
     else
-        puts "No tasks yet."
+        puts "Your task list is empty! :o"
     end
 
 when "3"    # UPDATING TASKS
-    if File.exists?("test.csv")
+    if File.exists?("tasks.csv") && ![].empty? 
         # VIEWING TASK
         task_list = []
         index = 0
-        CSV.foreach("test.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+        CSV.foreach("tasks.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
             task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
         end
-        task_list.each do |task|
-            index += 1
-            puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+        if !task_list.empty? == true
+            puts "Your current task list:"
+            task_list.each do |task|
+                index += 1
+                puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+            end
         end
+        puts "Your task list is empty! :o"
         # END VIEWING TASK
 
         puts "What task would you like to edit?"
@@ -91,51 +120,67 @@ when "3"    # UPDATING TASKS
             # raise error if not integer
 
         # Opening existing csv and selecting row
-        selected_row = CSV.read("test.csv")[input]
-        headers = CSV.read("test.csv")[0]
-        remaining_rows = CSV.read("test.csv")
+        selected_row = CSV.read("tasks.csv")[input]
+        headers = CSV.read("tasks.csv")[0]
+        remaining_rows = CSV.read("tasks.csv")
         
-        # Deleting selected row and headers
+        # Editing selected row and headers
         remaining_rows.delete(selected_row) # Removing a row
         remaining_rows.delete(headers)    # Removing headers
         
         # Writing back to csv
-        CSV.open("test.csv", "w", headers: true) do |csv|
+        CSV.open("tasks.csv", "w", headers: true) do |csv|
             csv << ["id", "title", "note", "user", "status"]
         end
         
-        CSV.open("test.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
+        CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
             remaining_rows.each do |array|
                 csv << array
             end
         end
+        
+        # Adding new task
+        required_details = ["Title", "Note", "User"]
+        task_card(required_details)
+        # remaining_rows.task_card(required_details)  
 
         # VIEWING TASK
         task_list = []
         index = 0
-        CSV.foreach("test.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+        CSV.foreach("tasks.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
             task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
         end
-        task_list.each do |task|
-            index += 1
-            puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+        if !task_list.empty? == true
+            puts "Your current task list:"
+            task_list.each do |task|
+                index += 1
+                puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+            end
         end
+        puts "Your task list is empty! :o"
         # END VIEWING TASK
     else
-        puts "No tasks yet."
+        puts "Your task list is empty! :o"
     end
     
 when "4"    # DELETING TASKS #
-    if File.exists?("test.csv")
+    if File.exists?("tasks.csv")
         # VIEWING TASK
         task_list = []
         index = 0
-        CSV.foreach("test.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+        CSV.foreach("tasks.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
             task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
         end
-        task_list.each do |task|
-            index += 1
-            puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+        if !task_list.empty? == true
+            puts "Your current task list:"
+            task_list.each do |task|
+                index += 1
+                puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+            end
+        end
+        if task_list.empty? == true
+            puts "Your task list is empty! :o"
+            return
         end
         # END VIEWING TASK
 
@@ -144,20 +189,20 @@ when "4"    # DELETING TASKS #
             # raise error if not integer
 
         # Opening existing csv and selecting row
-        selected_row = CSV.read("test.csv")[input]
-        headers = CSV.read("test.csv")[0]
-        remaining_rows = CSV.read("test.csv")
+        selected_row = CSV.read("tasks.csv")[input]
+        headers = CSV.read("tasks.csv")[0]
+        remaining_rows = CSV.read("tasks.csv")
         
         # Deleting selected row and headers
         remaining_rows.delete(selected_row) # Removing a row
         remaining_rows.delete(headers)    # Removing headers
         
         # Writing back to csv
-        CSV.open("test.csv", "w", headers: true) do |csv|
+        CSV.open("tasks.csv", "w", headers: true) do |csv|
             csv << ["id", "title", "note", "user", "status"]
         end
         
-        CSV.open("test.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
+        CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
             remaining_rows.each do |array|
                 csv << array
             end
@@ -166,17 +211,24 @@ when "4"    # DELETING TASKS #
         # VIEWING TASK
         task_list = []
         index = 0
-        CSV.foreach("test.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+        CSV.foreach("tasks.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
             task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
         end
-        task_list.each do |task|
-            index += 1
-            puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+        if !task_list.empty? == true
+            puts "Your current task list:"
+            task_list.each do |task|
+                index += 1
+                puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
+            end
+        end
+        if task_list.empty? == true
+            puts "Your task list is empty! :o"
+            return
         end
         # END VIEWING TASK
 
     else
-        puts "No tasks yet."
+        puts "Your task list is empty! :o"
     end
 else
     puts "Please select a valid option '1', '2', '3' or '4'"
