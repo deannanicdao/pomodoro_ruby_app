@@ -8,19 +8,7 @@ chosen_timer = nil
 loop do
     puts " ~ " * 20
     puts " " * 15 + "Welcome to PomodoroPal™"
-    puts " ~ " * 20
-
-    username = gets.chomp.lowercase
-
-    username = User.new(:username => "jeremy", :task_tickbox => false)
-
-    CSV.open("tasks_to_do.csv", "w", headers: true) do |csv|
-        csv << [:username, :task_title, :task_note, :task_tickbox]
-    end
-    
-
-
-
+    puts " ~ " * 20  
     puts " " * 10 + "What would you like to do first?"
     puts " "
         puts "(1) Begin Pomodoro session"
