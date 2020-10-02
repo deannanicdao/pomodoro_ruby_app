@@ -7,27 +7,31 @@ require 'ruby2d'
 # menu_song = Music.new('./Sounds/menu_music_pomodoro_pal.mp3')
 # rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
 
-tasks = []
+# === Variables === #
+task_list = []
 timers  = []
 message = "Farewell"
 seconds = 3
 # chosen_timer = nil
 
-loop do
+# === Main === #
+def main_menu
+    system('clear')
     puts " ~ " * 20
     puts " " * 15 + "Welcome to PomodoroPal™"
     puts " ~ " * 20  
-    puts " " * 10 + "What would you like to do first?"
+    puts " " * 10 + "What would you like to do?"
     puts " "
-        puts "(1) Begin Pomodoro session"
-        puts "(2) Set Timers"
-        puts "(3) Set Tasks"
-        puts "(4) Pick a Pal"
-        puts "(5) Settings"
-        puts "(6) Help"
-        puts "(7) Exit"
+    puts "(1) Begin Pomodoro session"
+    puts "(2) Set Timers"
+    puts "(3) Set Tasks"
+    puts "(4) Pick a Pal"
+    puts "(5) Settings"
+    puts "(6) Help"
+    puts "(7) Exit"
     puts " ~ " * 20
-    option = gets.chomp
+    @option = gets.chomp
+end
 
 # logged_in_user = User.new(:username => username, :task_tickbox => false)
 
@@ -35,24 +39,11 @@ loop do
 #     csv << [:username, :task_title, :task_note, :task_tickbox]
 # end
 
-
-puts " " * 10 + "What would you like to do?"
-puts " "
-puts "(1) Begin Pomodoro session"
-puts "(2) Set Timers"
-puts "(3) Set Tasks"
-puts "(4) Pick a Pal"
-puts "(5) Settings"
-puts "(6) Help"
-puts "(7) Exit"
-puts " ~ " * 20
-option = gets.chomp 
-
 system('clear')
+main_menu
+while @option != "7"
 
-while option != "7"
-
-    if option == "1"
+    if @option == "1"
         system('clear')
         check_timer_list(timers)
         puts ""
@@ -130,15 +121,18 @@ while option != "7"
                     next
                 else
                     puts "Please select 'Y' or 'N'"
+                    wait
                 end
             elsif timers.include?(timers.at(input_timer)) == false or input_timer != Integer
                 puts "Invalid number. Please enter a number from the list."
-                redo
+                wait
             else
                 puts "Invalid input. Please enter a number from the list."
+                wait
             end
         end
-    elsif option == "2"
+
+    elsif @option == "2"
         puts "What would you like to do?"
         puts "(1) Create timers"
         puts "(2) View timers"
@@ -157,16 +151,9 @@ while option != "7"
             #   raise error when work_timer != Integer or < 0
             timers << [work_timer, rest_timer]
             check_timer_list(timers)
-            
+
         when "2"
             check_timer_list(timers)
-            puts "press enter to return to menu"
-            input = gets
-                if input
-                    next
-                else
-                    wait
-                end
             
         when "3"
             check_timer_list(timers)
@@ -189,116 +176,120 @@ while option != "7"
         else
             return
         end
-    elsif option == "3"    # TASK MANAGER
+    elsif @option == "3"    # TASK MANAGER
         puts "What would you like to do?"
-            puts "(1) Create task"
-            puts "(2) View tasks"
-            puts "(3) Edit/Update tasks"
-            puts "(4) Delete tasks"
-    
+        puts "(1) Create task"
+        puts "(2) View tasks"
+        puts "(3) Edit/Update tasks"
+        puts "(4) Delete tasks"
         option = gets.chomp
 
         case option
-
-        when "1"
+        when "1"    # ADDING NEW TASKS
+            required_details = ["Title", "Note", "User"]
+        
+            if !File.exists?("tasks.csv")
+                CSV.open("tasks.csv", "w", headers: true) do |csv|
+                        csv << ["Title", "Note", "Status", "User"]
+                end
+                task_card(required_details)
+            else
+                task_card(required_details)
+            end
+        
+            #   VIEWING TASK LIST
+            view_tasks(task_list)
             
-        when "2"
-            check_task_list(tasks)
-            puts "press enter to return to menu"
-            input = gets
-                if input
-                    next
-                else
-                    wait
+        when "2"    # VIEWING TASK LIST
+            view_tasks(task_list)
+        
+        when "3"    # UPDATING TASKS
+            # if File.exists?("tasks.csv") && !task_list.empty? 
+            view_tasks(task_list)
+            puts "What task would you like to edit?"
+            input = gets.chomp.to_i
+                # raise error if not integer
+            
+            confirm_selection(input)
+            confirm = gets.chomp.strip.upcase
+            if confirm == "Y"
+                # Opening existing csv and selecting row
+                selected_row = CSV.read("tasks.csv")[input]
+                headers = CSV.read("tasks.csv")[0]
+                remaining_rows = CSV.read("tasks.csv")
+                
+                # Editing selected row and headers
+                remaining_rows.delete(selected_row) # Removing a row
+                remaining_rows.delete(headers)    # Removing headers
+                
+                # Writing back to csv
+                CSV.open("tasks.csv", "w", headers: true) do |csv|
+                    csv << ["id", "title", "note", "user", "status"]
                 end
-        when "3"
-            check_task_list(tasks)
-            if task.empty? == false
-                puts "Choose a task to delete"
-                input_task = gets.chomp.to_i - 1
-
-                puts "Would you like to delete this task? (Y/N)"
-                # "#{index+1}. Work timer: #{timer[0].to_i / 60 } min | Rest timer: #{timer[1].to_i / 60} min"
-                # puts "Work timer: #{timers[input_timer][0].to_i / 60 }min | Rest timer: #{timers[input_timer][1].to_i / 60 }min"
-                # puts "Timer #{timers[input_timer].to_i / 60}?"
-                answer = gets.chomp.upcase
-
-                if answer == "Y"
-                    tasks.delete_at(input_task)
-                elsif answer == "N"
-                    next
-                else
-                    puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
-                end
-            end
-
-        when "4"
-            check_timer_list(timers)
-            if timers.empty? == false
-                puts "Choose a timer to delete"
-                input_timer = gets.chomp.to_i - 1
-
-                puts "Would you like to delete this timer? (Y/N)"
-                puts "Work timer: #{timers[input_timer][0]}min | Rest timer: #{timers[input_timer][1]}min"
-                answer = gets.chomp.upcase
-
-                if answer == "Y"
-                    timers.delete_at(input_timer)
-                elsif answer == "N"
-                    next
-                else
-                    puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
-                end
-            end
-
-        when "5"
-            puts "Who would you like to assign this task to?"
-            username = gets.chomp.lowercase
-               # if username is found in csv 
-                    # then add task with said username to csv
-                    # print csv with said username
-               # elsif username is not found in csv
-                    puts "User not found. Would you like to make a new user?"
-                    input = gets.chomp.lowercase
-                    if input == "y"
-                        puts "Username:"
-                        username = gets.chomp.lowercase
-                    elsif input == "n"
-                        puts "These are the current tasks and users."
-                        check_task_list(tasks)
-                    else
-                        puts "Input invalid. Please select (Y/N)"
+                
+                CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
+                    remaining_rows.each do |array|
+                        csv << array
                     end
+                end
+                
+                # Adding new task
+                required_details = ["Title", "Note", "User"]
+                task_card(required_details)
+                view_tasks(task_list)
+            elsif confirm == "N"
+                return
+            else
+                puts "Please select a valid answer: 'Y' or 'N'"
+            end
+        
+        when "4"    # DELETING TASKS #
+                p view_tasks(task_list)
+                p task_list
+                puts "What task would you like to delete?"
+                input = gets.chomp.to_i
+                
+        
+                confirm_selection(input)
+                confirm = gets.chomp.strip
+                # raise error if not integer
+                option = gets.chomp.upcase
+                case option
+                when "Y"
+                    # Opening existing csv and selecting row
+                    selected_row = CSV.read("tasks.csv")[input]
+                    headers = CSV.read("tasks.csv")[0]
+                    remaining_rows = CSV.read("tasks.csv")
+        
+                    # Deleting selected row and headers
+                    remaining_rows.delete(selected_row) # Removing a row
+                    remaining_rows.delete(headers)    # Removing headers
+                    view_tasks(task_list)
+                    
+                when "N"
+                    return
+                else
+                    puts "Please select an existing task number."
+                end
+        else
+            puts "Please select a valid option '1', '2', '3' or '4'"
         end
         
-    elsif option == "4"    # PICK A PAL
-    elsif option == "5"    # SETTINGS
+    elsif @option == "4"    # PICK A PAL
+    elsif @option == "5"    # SETTINGS
         # case for music setting
         # case for alarm setting
         
-    elsif option == "6"    # HELP
+    elsif @option == "6"    # HELP
         # puts help manual here
     end
 
-system('clear')
-
-puts " " * 10 + "What would you like to do?"
-puts " "
-puts "(1) Begin Pomodoro session"
-puts "(2) Set Timers"
-puts "(3) Set Tasks"
-puts "(4) Pick a Pal"
-puts "(5) Settings"
-puts "(6) Help"
-puts "(7) Exit"
-puts " ~ " * 20
-option = gets.chomp 
-
-system('clear')
+    main_menu
 end
 
 system('clear')
 puts "#{message.to_s}!"
 @death.play
 sleep(1)
+system('clear')
 exit
