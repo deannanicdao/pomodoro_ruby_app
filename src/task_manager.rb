@@ -27,7 +27,7 @@ def task_card(details)
                 puts "#{column}:"
                 input = gets.chomp.strip
                 until input.empty? == false
-                    puts "You haven't entered anything. Please enter a valid description."
+                    puts "You haven't entered anything. Please enter a valid #{column.downcase}."
                     input = gets.chomp.strip
                     system('clear')
                 end
