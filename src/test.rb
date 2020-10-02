@@ -46,18 +46,73 @@ require 'smarter_csv'
 # end
 
 
-total_chunks = SmarterCSV.process('test.csv', {:chunk_size => 2, :key_mapping => {:color => :color, :quantity}}) do |chunk|
+# total_chunks = SmarterCSV.process('test.csv', {:chunk_size => 2, :key_mapping => {:color => :color, :quantity => :quantity}}) do |chunk|
+#     chunk.each do |item|   # you can post-process the data from each row to your heart's content, and also create virtual attributes:
+#         item[:row] = [item[:color],item[:quantity]].join(' ')  
+#         item.delete(:color) ; item.delete(:last)
+#     end
+#     puts "-----"
+#     puts chunk.inspect
+#     # puts "#{total_chunks[0][:row]}"
+# end
+
+total_chunks = SmarterCSV.process('test.csv') do |chunk|
     chunk.each do |item|   # you can post-process the data from each row to your heart's content, and also create virtual attributes:
-        item[:row] = [item[:color],item[:quantity]].join(' ')  
-        item.delete(:color) ; item.delete(:quantity)
+        # item[:row] = [item[:color],item[:quantity]].join(' ')  
+        item.delete(:row)
     end
-    puts chunk.inspect   # we could at this point pass the chunk to a Resque worker..
+    puts "-----"
+    puts chunk.inspect
+    # puts "#{total_chunks[0][:row]}"
 end
 
 # puts "Edit this task?"
 # puts "#{task_list[0][:id]}. #{task_list[0][:task].upcase} | '#{task_list[0][:note].capitalize}' | Assigned to: #{task_list[0][:user].upcase} | Completion: #{task_list[0][:tickbox].upcase}"
 
 
+input = 2
+selected_row = CSV.read("test.csv")[input]
+headers = CSV.read("test.csv")[0]
+remaining_rows = CSV.read("test.csv") # - CSV.read("test.csv")[2] # not needed
+# headers = CSV.read("test.csv") - CSV.read("test.csv")[0]
+# p remaining_rows.delete(headers)
 
+# BELOW IS WORKING CODE ! #
+
+puts "---- row being removed ----"
+
+p remaining_rows.delete(selected_row)
+
+puts "---- rows remaining ----"
+p remaining_rows
+
+puts "---- headers being removed ----"
+
+p remaining_rows.delete(headers)
+
+puts "---- rows remaining ----"
+p remaining_rows
+
+puts "---- format of each row before back to csv ----"
+remaining_rows.each do |array|
+    p array
+end
+
+
+puts "---- back to csv ----"
+
+CSV.open("test_2.csv", "w", headers: true) do |csv|
+        csv << ["Index", " Year", " Age", " Name", " Movie"]
+end
+CSV.open("test_2.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
+        remaining_rows.each do |array|
+                csv << array
+        end
+end
+
+new_csv = CSV.read("test_2.csv")
+new_csv.each do |row|
+    p row
+end
 
 
