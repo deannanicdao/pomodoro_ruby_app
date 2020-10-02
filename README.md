@@ -109,6 +109,8 @@ Look at the great diagram below.
 
 Features / Checklists for Each Feature / Priority Level / Estimated Duration
 
+Trello board: https://trello.com/b/ksciPUpE/pomodoro-pal 
+
 
 
 ### Status Updates/Development Log
