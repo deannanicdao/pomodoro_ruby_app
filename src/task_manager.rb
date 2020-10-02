@@ -25,9 +25,15 @@ def task_card(details)
             task << id
             details.each do |column|
                 puts "#{column}:"
-                input = gets.chomp
+                input = gets.chomp.strip
+                until input.empty? == false
+                    puts "You haven't entered anything. Please enter a valid description."
+                    input = gets.chomp.strip
+                    system('clear')
+                end
                 task << input
             end
+
             task << "incomplete"
             CSV.open("tasks.csv", "a", headers: true) do |csv|
                 csv << task
@@ -39,7 +45,7 @@ def task_card(details)
     when "N"
         "Returning to menu..."
         wait       
-    else != "N" or "Y"
+    else
         puts "Please select a valid answer: 'Y' or 'N'"
     end
 end
@@ -100,8 +106,13 @@ def wait
 end
 
 def tick_task
-
+    system('clear')
+    selected_row = CSV.read("tasks.csv")[input]
+    selected_row[4] = "complete"
 end
 
 def untick_task
+    system('clear')
+    selected_row = CSV.read("tasks.csv")[input]
+    selected_row[4] = "incomplete"
 end

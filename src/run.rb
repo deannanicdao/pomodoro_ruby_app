@@ -213,6 +213,7 @@ while @option != "7"
             
             confirm_selection(input)
             confirm = gets.chomp.strip.upcase
+            system('clear')
             if confirm == "Y"
                 # Opening existing csv and selecting row
                 selected_row = CSV.read("tasks.csv")[input]
@@ -251,8 +252,8 @@ while @option != "7"
                 input = gets.chomp.to_i
                 
         
+                # confirm = gets.chomp.strip
                 confirm_selection(input)
-                confirm = gets.chomp.strip
                 # raise error if not integer
                 option = gets.chomp.upcase
                 case option
