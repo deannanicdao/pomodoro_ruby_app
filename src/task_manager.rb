@@ -30,41 +30,43 @@ when "1"    # ADDING NEW TASKS
             puts "Add a task? (Y/N)"
             answer = gets.chomp.upcase
             if answer == "Y"
+                current = CSV.read("test.csv")
+                id = current.length
+                task << id
                 details.each do |column|
                     puts "#{column}:"
                     input = gets.chomp
                     task << input
                 end
-                task << "In progress"
-            CSV.open("tasks.csv", "a", headers: true) do |csv|
-                csv << task
-            end
+                task << "incomplete"
+                CSV.open("test.csv", "a", headers: true) do |csv|
+                    csv << task
+                end
             else answer == "N" 
                 return
             end
         end
     end
 
-    if !File.exists?("tasks.csv")
+    if !File.exists?("test.csv")
         CSV.open("tasks.csv", "w", headers: true) do |csv|
                 csv << ["User", "Title", "Note", "Status"]
         end
-            task_card(required_details)
-            
+        task_card(required_details)
     else
-            task_card(required_details)
+        task_card(required_details)
     end
 
 when "2"    # VIEWING TASK LIST
-    if File.exists?("tasks.csv")
+    if File.exists?("test.csv")
         task_list = []
         index = 0
-        CSV.foreach("tasks.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
+        CSV.foreach("test.csv", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: true) do |row|
             task_list << Task.new(row[:user], row[:title], row[:note], row[:status])
         end
         task_list.each do |task|
             index += 1
-            puts "#{index}. User: #{task.user} | #{task.title}: #{task.note} | Status: #{task.status}"
+            puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
         end
     else
         puts "No tasks yet."
@@ -73,7 +75,7 @@ when "2"    # VIEWING TASK LIST
 when "3"    # UPDATING TASKS
     
 when "4"    # DELETING TASKS #
-    if File.exists?("tasks.csv")
+    if File.exists?("test.csv")
         puts "What task would you like to delete?"
         input = gets.chomp.to_i
             # raise error if not integer
@@ -89,7 +91,7 @@ when "4"    # DELETING TASKS #
         
         # Writing back to csv
         CSV.open("test_2.csv", "w", headers: true) do |csv|
-            csv << ["id", "task", "note", "user", "tickbox"]
+            csv << ["id", "title", "note", "user", "status"]
         end
         
         CSV.open("test_2.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
