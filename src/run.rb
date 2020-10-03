@@ -140,15 +140,15 @@ def main
 
         when 2  # TIMERS CRUD
             choices = [
-            {"Create timers" => -> do option = 1 end}, 
-            {"View timers" => -> do option = 2 end}, 
-            {"Delete timers" => -> do option = 3 end}
+            {"Create timers" => -> do @timer_option = 1 end}, 
+            {"View timers" => -> do @timer_option = 2 end}, 
+            {"Delete timers" => -> do @timer_option = 3 end}
             ]
             
             $prompt.select("Select an option: ", choices)
             puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
             
-            case option
+            case @timer_option
             when 1
                 puts "Work timer (min):"
                 work_timer = gets.chomp.to_f * 60
