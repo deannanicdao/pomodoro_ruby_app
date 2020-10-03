@@ -1,6 +1,5 @@
 require_relative './task_manager.rb'
 require_relative './timer.rb'
-# require_relative './clock.rb'
 require 'ruby2d'
 
 # Background music #
@@ -182,8 +181,9 @@ while @option != "7"
         puts "What would you like to do?"
         puts "(1) Create task"
         puts "(2) View tasks"
-        puts "(3) Edit/Update tasks"
+        puts "(3) Change tasks"
         puts "(4) Delete tasks"
+        puts "(5) Tick off task"
         option = gets.chomp
 
         case option
@@ -204,19 +204,8 @@ while @option != "7"
             
         when "2"    # VIEWING TASK LIST
             view_tasks(task_list)
-            puts "Tick [ x ] | Untick [ - ]"
-
-            p selected_row[4]
-
-            option = gets.chomp.strip
-            case option
-            when "x"
-                untick_task
-            when "-"
-                tick_task
-            end
         
-        when "3"    # UPDATING TASKS
+        when "3"    # CHANGING TASKS
             # if File.exists?("tasks.csv") && !task_list.empty? 
             view_tasks(task_list)
             puts "What task would you like to edit?"
@@ -287,8 +276,13 @@ while @option != "7"
                     end
                 end
             end
+        
+        
+        when "5"    # TICK OFF TASK #
+               tick_task
+               view_tasks(task_list)
         else
-            puts "Please select a valid option '1', '2', '3' or '4'"
+            puts "Please select a valid option '1', '2', '3' or '4' or '5'"
         end
         
     elsif @option == "4"    # PICK A PAL
@@ -297,7 +291,10 @@ while @option != "7"
         # case for alarm setting
         
     elsif @option == "6"    # HELP
-        # puts help manual here
+        system('clear')
+        help = File.open("help.txt")
+        puts help.read
+        wait
     end
 
     main_menu

@@ -94,7 +94,7 @@ def confirm_selection(input)
     system('clear')
     selected_row = CSV.read("tasks.csv")[input]
     puts "Is this the correct selection? (Y/N)"
-    puts "Task: #{selected_row[1]} | Note: #{selected_row[2]} | Assigned to: #{selected_row[3]} | Status: #{selected_row[4]}"
+    puts "Task: #{selected_row[1].capitalize} | Note: #{selected_row[2].capitalize} | Assigned to: #{selected_row[3].upcase} | Status: #{selected_row[4].upcase}"
 end
 
 def wait
@@ -116,20 +116,19 @@ def tick_task
     when "Y"
         input = input - 1
         table = CSV.parse(File.read("tasks.csv"), headers: true)
-        p table[input][4]
-        puts "tick: 'x' or untick: '-'"
+        table[input][4]
+        puts "Change status to:"
+        puts "Complete: 'x' | Incomplete: '-'"
         status = gets.chomp.downcase.strip
         if status == "x"
-            puts "complete condition"
             status = "complete"
         else status == "-"
-            puts "incomplete condition"
             status = "incomplete"
         end
 
         table[input][4] = status
-        p table.by_row![input][4]
-        p table[input]
+        table.by_row![input][4]
+        table[input]
 
         # Writing back to csv
         CSV.open("tasks.csv", "w", headers: true) do |csv|
