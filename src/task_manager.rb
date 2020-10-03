@@ -152,6 +152,22 @@ end
 # p CSV.read("tasks.csv")
 table = CSV.parse(File.read("tasks.csv"), headers: true)
 p table[0][4]
+tick = "complete"
+table[0][4] = tick
+p table.by_row![0][4]
+p table[0]
+
+# Writing back to csv
+CSV.open("tasks.csv", "w", headers: true) do |csv|
+    csv << ["id", "title", "note", "user", "status"]
+end
+
+CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
+    table.each do |row|
+        csv << row
+    end
+end
+
 # CSV.open("tasks.csv", "r+") do |file|
 #     file.readline()
 #     file.write("Complete")
