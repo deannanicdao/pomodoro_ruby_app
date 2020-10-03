@@ -18,9 +18,26 @@ You will first select a timer then the number of sessions (iterations) of the se
 Once you have completed all sessions, you may return to the menu (hit 'a') or exit the app ('b'). 
 
 2: Timers
-
+Select 'Timers' will direct you to following options:
+- Create timers
+    Select this option to make a new timer. You will be prompted to input the number of mins for the work and rest intervals.
+- View timers
+    Select this option to view all current timers stored. This resets after the application is closed. 
+- Delete timers
+    Select this option to delete a specific timer from the list.
 
 3: Tasks
+Select 'Tasks' will direct you to following options:
+- Create tasks
+    Select this option to make a new task. You will be prompted to input the title/note/username.
+- View tasks
+    Select this option to view all current timers stored. This resets after the application is closed. 
+- Change a task
+    Select this option to rewrite a task. You will be prompted to input the title/note/username.
+- Delete timers
+    Select this option to delete a specific timer from the list.
+- Tick off a task
+    Select this option to tick/untick your tasks. The status can be toggled between 'complete' and 'incomplete'.
 
 4: Pal
 
