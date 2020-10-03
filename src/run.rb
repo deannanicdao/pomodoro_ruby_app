@@ -50,7 +50,8 @@ def main
     main_menu
     while @option != 7
 
-        if @option == 1
+        case @option
+        when 1
             check_timer_list(timers)
             puts ""
             if timers.empty? == false
@@ -137,7 +138,7 @@ def main
                 end
             end
 
-        elsif @option == 2  # TIMERS CRUD
+        when 2  # TIMERS CRUD
             puts "What would you like to do?"
             puts "(1) Create timers"
             puts "(2) View timers"
@@ -181,16 +182,16 @@ def main
             else
                 return
             end
-        elsif @option == 3  # TASK MANAGER CRUD
+        when 3  # TASK MANAGER CRUD
             choices = [
             {"Create a task" => -> do option = 1 end}, 
             {"View tasks" => -> do option = 2 end}, 
             {"Change a task" => -> do option = 3 end},
             {"Delete tasks" => -> do option = 4 end},
             {"Tick off a task" => -> do option = 5 end},
-        ]
-        $prompt.select("Select an option: ", choices)
-        puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
+            ]
+            $prompt.select("Select an option: ", choices)
+            puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
 
             case option
             when 1    # ADDING NEW TASKS
@@ -291,12 +292,12 @@ def main
                 puts "Please select a valid option '1', '2', '3' or '4' or '5'"
             end
             
-        elsif @option == 4  # PICK A PAL
-        elsif @option == 5  # SETTINGS
+        when 4  # PICK A PAL
+        when 5  # SETTINGS
             # case for music setting
             # case for alarm setting
             
-        elsif @option == 6  # HELP
+        when 6  # HELP
             help = File.open("help.txt")
             puts help.read
             pause("Ain't much to it, aye. Press enter to return to menu so we can begin.")
