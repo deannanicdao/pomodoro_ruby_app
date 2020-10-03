@@ -8,7 +8,34 @@ https://github.com/deannanicdao/pomodoro_ruby_app
 
 ### Installation and Use
 
-Pomodoro Pal is a command-line interface (CLI) application written using the Ruby language. All content can be downloaded from Github (**Github URL**). 
+Pomodoro Pal is a command-line interface (CLI) application written using the Ruby language. 
+
+ystem requirements: Computer with Ruby 2.0+ and terminal (Mac OS X, Terminal 2.10 was used to create this app).
+Requisite Gems will be automatically installed via the instructions below. No other software or hardware requirements.
+To access your terminal on mac OS, type '⌘ + space bar' for the macOS spotlight search. Type in 'terminal' into the search bar.
+Press Enter.
+Install Ruby (if unsure check this resource: https://www.ruby-lang.org/en/documentation/installation/) and click on the Github link (https://github.com/deannanicdao/pomodoro_ruby_app), download and extract the .zip file or insert the following command into your terminal (make sure you are in a desired directory):
+
+```
+$ git clone https://github.com/deannanicdao/pomodoro_ruby_app
+```
+
+In your terminal, navigate to the 'src' directory where the content has been downloaded.
+
+``` bash
+pwd # check current location (directory)
+ls # check items in current directory
+cd [path] # move to a specific directory
+```
+Example
+```
+cd Downloads/pomodoro_ruby_app/src
+```
+To start the app run:
+```
+./install.sh
+```
+Your terminal screen should now show the title screen and main menu. Here you can select the help menu for guidance on the app. 
 
 ### Dependencies required by Pomodoro Pal
 

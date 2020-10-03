@@ -2,10 +2,14 @@
 
 source "https://rubygems.org"
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+git_source(:github) {|repo_name| "https://github.com/deannanicdao/pomodoro_ruby_app" }
 
 # gem "rails"
 
 gem "rspec", "~> 3.9"
 gem 'tty-font'
+gem 'pastel'
+gem 'colorize'
+gem 'tty-prompt'
+
 $ bundle
