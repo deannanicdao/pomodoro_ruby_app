@@ -97,11 +97,10 @@ def confirm_selection(input)
     puts "Task: #{selected_row[1].capitalize} | Note: #{selected_row[2].capitalize} | Assigned to: #{selected_row[3].upcase} | Status: #{selected_row[4].upcase}"
 end
 
-def wait
-    puts "Press enter to continue..."
-    input = gets.chomp.strip
-    until input do
-        next
+def pause(message)
+    puts message
+    if gets
+        system('clear')
     end
 end
 

@@ -1,0 +1,7 @@
+---
+- !ruby/object:Bird
+  id_tag: '123'
+  type: Whitefaced
+  mutation: Green
+  sex: Hen
+  age: '5'

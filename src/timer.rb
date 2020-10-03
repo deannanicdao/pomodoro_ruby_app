@@ -79,7 +79,7 @@ def check_timer_list(timers)
         puts "You haven't set any timers yet."
         puts "Go create one under (2) Set Timers."
         puts " "
-        wait
+        pause("Press enter to return to menu")
     end
 end
 
