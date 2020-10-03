@@ -105,19 +105,29 @@ def wait
     end
 end
 
-def tick_task
+def task(status)
     view_tasks(@task_list)
     puts "Which task would you like to tick?"
-    input = gets.chomp.to_i - 1
+    input = gets.chomp.to_i
     selected_row = CSV.read("tasks.csv")[input]
     confirm_selection(input)
     confirm = gets.chomp.strip.upcase
     case confirm
     when "Y"
+        input = input - 1
         table = CSV.parse(File.read("tasks.csv"), headers: true)
         p table[input][4]
-        tick = "complete"
-        table[input][4] = tick
+        puts "tick: 'x' or untick: '-'"
+        status = gets.chomp.downcase.strip
+        if status == "x"
+            puts "complete condition"
+            status = "complete"
+        else status == "-"
+            puts "incomplete condition"
+            status = "incomplete"
+        end
+
+        table[input][4] = status
         p table.by_row![input][4]
         p table[input]
 
@@ -146,4 +156,4 @@ def untick_task
 end
 
 
-tick_task
+task(@untick)
