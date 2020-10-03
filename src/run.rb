@@ -4,8 +4,8 @@ require_relative './timer.rb'
 require 'ruby2d'
 
 # Background music #
-# menu_song = Music.new('./Sounds/menu_music_pomodoro_pal.mp3')
-# rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
+@menu_song = Sound.new('./Sounds/menu_music_pomodoro_pal.mp3')
+rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
 
 # === Variables === #
 task_list = []
@@ -16,6 +16,7 @@ seconds = 3
 
 # === Main === #
 def main_menu
+    @menu_song.play
     system('clear')
     puts " ~ " * 20
     puts " " * 15 + "Welcome to PomodoroPal™"
@@ -204,6 +205,9 @@ while @option != "7"
         when "2"    # VIEWING TASK LIST
             view_tasks(task_list)
             puts "Tick [ x ] | Untick [ - ]"
+
+            p selected_row[4]
+
             option = gets.chomp.strip
             case option
             when "x"
@@ -248,7 +252,7 @@ while @option != "7"
                 task_card(required_details)
                 view_tasks(task_list)
             elsif confirm == "N"
-                return
+                wait
             else
                 puts "Please select a valid answer: 'Y' or 'N'"
             end
