@@ -13,6 +13,7 @@ end
 # === Task methods === #
 def task_card(details)
     system('clear')
+    banner
     puts "Add a task? (Y/N)"
     task = []
     answer = gets.chomp.upcase
@@ -43,15 +44,14 @@ def task_card(details)
         answer = gets.chomp.upcase
         end
     when "N"
-        "Returning to menu..."
-        wait       
+        pause("Changed your mind? Ok, returning to menu...")
+             
     else
-        puts "Please select a valid answer: 'Y' or 'N'"
+        "Please select a valid answer: 'Y' or 'N'"
     end
 end
 
 def view_tasks(task_list)
-    system('clear')
     if File.exists?("tasks.csv")
         task_list = []
         index = 0
@@ -65,16 +65,15 @@ def view_tasks(task_list)
                 index += 1
                 puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
             end
-            wait
-        end
-
-        if task_list.empty? == true
+            pause("Press enter to return to continue...")
+        else task_list.empty? == true
             puts "Your task list is empty! :o"
-            return
+            pause("Press enter to return to menu")
         end
 
     else
         puts "Your task list is empty! :o"
+        pause("Press enter to return to menu")
     end
 end
 
@@ -140,7 +139,7 @@ def tick_task
             end
         end
     when "N"
-        wait
+        pause("Changed your mind? Ok, returning to menu...")
     else
         puts "Please select a valid option: 'Y' or 'N'"
     end

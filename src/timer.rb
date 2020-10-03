@@ -72,14 +72,16 @@ end
 def check_timer_list(timers)
     system('clear')
     if timers.empty? == false
+        banner
         puts "Here are your current timers:"
         timers.each_with_index {|timer, index| puts "#{index+1}. Work timer: #{timer[0].to_f / 60 } min | Rest timer: #{timer[1].to_f / 60} min"}
     else timers.empty? == true
+        banner
         puts " "
         puts "You haven't set any timers yet."
         puts "Go create one under (2) Set Timers."
         puts " "
-        pause("Press enter to return to menu")
+        pause("Press enter to return to menu...")
     end
 end
 

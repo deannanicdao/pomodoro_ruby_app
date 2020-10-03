@@ -20,12 +20,11 @@ def main
     timers  = []
     message = "Farewell"
     seconds = 3
-    # chosen_timer = nil
     
     def main_menu   #   Present welcome screen & main menu
         system('clear')
         $prompt = TTY::Prompt.new
-        @menu_song.play
+        # @menu_song.play
         banner
         @choices = [
             {"Begin Pomodoro session" => -> do @option = 1 end}, 
@@ -183,17 +182,18 @@ def main
                 return
             end
         elsif @option == 3  # TASK MANAGER CRUD
-            system('clear')
-            puts "What would you like to do?"
-            puts "(1) Create task"
-            puts "(2) View tasks"
-            puts "(3) Change tasks"
-            puts "(4) Delete tasks"
-            puts "(5) Tick off task"
-            option = gets.chomp
+            choices = [
+            {"Create a task" => -> do option = 1 end}, 
+            {"View tasks" => -> do option = 2 end}, 
+            {"Change a task" => -> do option = 3 end},
+            {"Delete tasks" => -> do option = 4 end},
+            {"Tick off a task" => -> do option = 5 end},
+        ]
+        $prompt.select("Select an option: ", choices)
+        puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
 
             case option
-            when "1"    # ADDING NEW TASKS
+            when 1    # ADDING NEW TASKS
                 required_details = ["Title", "Note", "User"]
             
                 if !File.exists?("tasks.csv")
@@ -208,10 +208,10 @@ def main
                 #   VIEWING TASK LIST
                 view_tasks(task_list)
                 
-            when "2"    # VIEWING TASK LIST
+            when 2    # VIEWING TASK LIST
                 view_tasks(task_list)
             
-            when "3"    # CHANGING TASKS
+            when 3    # CHANGING TASKS
                 # if File.exists?("tasks.csv") && !task_list.empty? 
                 view_tasks(task_list)
                 puts "What task would you like to edit?"
@@ -252,7 +252,7 @@ def main
                     puts "Please select a valid answer: 'Y' or 'N'"
                 end
             
-            when "4"    # DELETING TASKS #
+            when 4    # DELETING TASKS #
                 view_tasks(task_list)
                 puts "What task would you like to delete?"
                 input = gets.chomp.to_i
@@ -284,7 +284,7 @@ def main
                 end
             
             
-            when "5"    # TICK OFF TASK #
+            when 5    # TICK OFF TASK #
                 tick_task
                 view_tasks(task_list)
             else
@@ -297,10 +297,9 @@ def main
             # case for alarm setting
             
         elsif @option == 6  # HELP
-            system('clear')
             help = File.open("help.txt")
             puts help.read
-            wait
+            pause("Ain't much to it, aye. Press enter to return to menu so we can begin.")
         end
 
         main_menu
