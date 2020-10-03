@@ -1,3 +1,5 @@
+# ----- Start Help Manual ----- #
+
 Welcome to 'Pomodoro Pal', a tool to help you stay on track with whatever it is you need to be doing.
 
 The aim of Pomodoro sessions are to set a reasonable time-frame for work/rest balance.
@@ -9,7 +11,11 @@ Recommended work/rest time intervals are:
 These intervals may be repeated as many times as needed. Typically, three to five sessions are recommended within a session.
 This ensures focus is not lost due to overworking. 
 
+# ----- Navigation ----- #
+
 Navigate the main menu and sub-menus using the arrows keys and hit enter to select an option. 
+
+# ----- Options ----- #
 
 1: Pomodoro sessions
 You must first have existing timers but you can start a session without tasks. 
@@ -51,3 +57,5 @@ You have clearly figured out this option which views the manual you're currently
 
 7: Exit
 This will close the app. Note: Your timers won't be saved after closing the application, but your tasks and their status will be saved to 'tasks.csv'.
+
+# ----- End ----- #
