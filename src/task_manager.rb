@@ -106,37 +106,35 @@ def wait
 end
 
 def tick_task
+    view_tasks(@task_list)
     puts "Which task would you like to tick?"
-    input = gets.chomp.to_i
+    input = gets.chomp.to_i - 1
     selected_row = CSV.read("tasks.csv")[input]
-    selected_row[4] = "complete"
+    confirm_selection(input)
+    confirm = gets.chomp.strip.upcase
+    case confirm
+    when "Y"
+        table = CSV.parse(File.read("tasks.csv"), headers: true)
+        p table[input][4]
+        tick = "complete"
+        table[input][4] = tick
+        p table.by_row![input][4]
+        p table[input]
 
-    # Opening existing csv and selecting row
-    # selected_row = CSV.("tasks.csv")[input][4]
-    selected_row = CSV.read("tasks.csv")[input][4]
-    headers = CSV.read("tasks.csv")[0]
-    remaining_rows = CSV.read("tasks.csv")
-    # p selected_row
-    # selected_row = "complete"
-    # p CSV.read("tasks.csv")[input]
-    # p selected_row
-    # puts "----"
-    # p remaining_rows
-    
-    # Editing selected row and headers
-    remaining_rows.delete(selected_row) # Removing a row
-    remaining_rows.delete(headers)    # Removing headers
-    CSV.read("tasks.csv")[input][4] = "complete"
-    
-    # Writing back to csv
-    CSV.open("tasks.csv", "w", headers: true) do |csv|
-        csv << ["id", "title", "note", "user", "status"]
-    end
-    
-    CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
-        remaining_rows.each do |array|
-            csv << array
+        # Writing back to csv
+        CSV.open("tasks.csv", "w", headers: true) do |csv|
+            csv << ["id", "title", "note", "user", "status"]
         end
+
+        CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
+            table.each do |row|
+                csv << row
+            end
+        end
+    when "N"
+        wait
+    else
+        puts "Please select a valid option: 'Y' or 'N'"
     end
 end
 
@@ -147,28 +145,5 @@ def untick_task
     selected_row[4] = "incomplete"
 end
 
-# tick_task
 
-# p CSV.read("tasks.csv")
-table = CSV.parse(File.read("tasks.csv"), headers: true)
-p table[0][4]
-tick = "complete"
-table[0][4] = tick
-p table.by_row![0][4]
-p table[0]
-
-# Writing back to csv
-CSV.open("tasks.csv", "w", headers: true) do |csv|
-    csv << ["id", "title", "note", "user", "status"]
-end
-
-CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
-    table.each do |row|
-        csv << row
-    end
-end
-
-# CSV.open("tasks.csv", "r+") do |file|
-#     file.readline()
-#     file.write("Complete")
-# end
+tick_task
