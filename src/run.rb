@@ -139,16 +139,17 @@ def main
             end
 
         when 2  # TIMERS CRUD
-            puts "What would you like to do?"
-            puts "(1) Create timers"
-            puts "(2) View timers"
-            puts "(3) Delete timers"
+            choices = [
+            {"Create timers" => -> do option = 1 end}, 
+            {"View timers" => -> do option = 2 end}, 
+            {"Delete timers" => -> do option = 3 end}
+            ]
             
-            option = gets.chomp
-
+            $prompt.select("Select an option: ", choices)
+            puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
+            
             case option
-
-            when "1"
+            when 1
                 puts "Work timer (min):"
                 work_timer = gets.chomp.to_f * 60
                 #   raise error when work_timer != Integer or < 0
@@ -158,10 +159,10 @@ def main
                 timers << [work_timer, rest_timer]
                 check_timer_list(timers)
 
-            when "2"
+            when 2
                 check_timer_list(timers)
                 
-            when "3"
+            when 3
                 check_timer_list(timers)
                 if timers.empty? == false
                     puts "Choose a timer to delete"
@@ -184,16 +185,16 @@ def main
             end
         when 3  # TASK MANAGER CRUD
             choices = [
-            {"Create a task" => -> do option = 1 end}, 
-            {"View tasks" => -> do option = 2 end}, 
-            {"Change a task" => -> do option = 3 end},
-            {"Delete tasks" => -> do option = 4 end},
-            {"Tick off a task" => -> do option = 5 end},
+            {"Create a task" => -> do @task_option = 1 end}, 
+            {"View tasks" => -> do @task_option = 2 end}, 
+            {"Change a task" => -> do @task_option = 3 end},
+            {"Delete tasks" => -> do @task_option = 4 end},
+            {"Tick off a task" => -> do @task_option = 5 end}
             ]
             $prompt.select("Select an option: ", choices)
             puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
 
-            case option
+            case @task_option
             when 1    # ADDING NEW TASKS
                 required_details = ["Title", "Note", "User"]
             
@@ -205,9 +206,6 @@ def main
                 else
                     task_card(required_details)
                 end
-            
-                #   VIEWING TASK LIST
-                view_tasks(task_list)
                 
             when 2    # VIEWING TASK LIST
                 view_tasks(task_list)
