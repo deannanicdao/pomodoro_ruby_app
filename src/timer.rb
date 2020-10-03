@@ -29,6 +29,7 @@ def countdown(timer)
         puts "Today is " + Time.new.getlocal.strftime("%A | %d-%m-%Y")
         sleep(1)
         seconds -= 1
+        time_now = Time.now.strftime("%s").to_i
         # sleep(1)
         # tick += 1
         # puts "#{tick}s"
