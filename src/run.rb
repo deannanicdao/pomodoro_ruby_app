@@ -149,7 +149,7 @@ def main
             puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
             
             case @timer_option
-            when 1
+            when 1  # Create timers
                 puts "Work timer (min):"
                 work_timer = gets.chomp.to_f * 60
                 #   raise error when work_timer != Integer or < 0
@@ -159,10 +159,10 @@ def main
                 timers << [work_timer, rest_timer]
                 check_timer_list(timers)
 
-            when 2
+            when 2  # View timers
                 check_timer_list(timers)
                 
-            when 3
+            when 3 # View then delete a selected timer
                 check_timer_list(timers)
                 if timers.empty? == false
                     puts "Choose a timer to delete"
@@ -175,13 +175,11 @@ def main
                     if answer == "Y"
                         timers.delete_at(input_timer)
                     elsif answer == "N"
-                        next
+                        pause("Changed your mind? Ok, returning to menu...")
                     else
                         puts "Please enter a valid timer to delete."            # TEST THIS CONDITION TOMORROW
                     end
                 end
-            else
-                return
             end
         when 3  # TASK MANAGER CRUD
             choices = [
@@ -216,10 +214,11 @@ def main
                 puts "What task would you like to edit?"
                 input = gets.chomp.to_i
                     # raise error if not integer
-                
+                system('clear')
+                banner
                 confirm_selection(input)
                 confirm = gets.chomp.strip.upcase
-                system('clear')
+
                 if confirm == "Y"
                     # Opening existing csv and selecting row
                     selected_row = CSV.read("tasks.csv")[input]
@@ -246,7 +245,7 @@ def main
                     task_card(required_details)
                     view_tasks(task_list)
                 elsif confirm == "N"
-                    wait
+                    pause("Changed your mind? Ok, returning to menu...")
                 else
                     puts "Please select a valid answer: 'Y' or 'N'"
                 end
