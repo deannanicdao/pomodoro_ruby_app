@@ -105,9 +105,9 @@ def wait
     end
 end
 
-def task(status)
+def tick_task
     view_tasks(@task_list)
-    puts "Which task would you like to tick?"
+    puts "Select task number:"
     input = gets.chomp.to_i
     selected_row = CSV.read("tasks.csv")[input]
     confirm_selection(input)
@@ -147,13 +147,3 @@ def task(status)
         puts "Please select a valid option: 'Y' or 'N'"
     end
 end
-
-def untick_task
-    puts "Which task would you like to tick?"
-    input = gets.chomp.to_i
-    selected_row = CSV.read("tasks.csv")[input]
-    selected_row[4] = "incomplete"
-end
-
-
-task(@untick)

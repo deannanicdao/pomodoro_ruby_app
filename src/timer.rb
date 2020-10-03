@@ -2,7 +2,6 @@ require 'time'
 require 'pastel'
 require 'tty-progressbar'
 require 'ruby2d'
-# require_relative './run.rb'
 
 # Sounds for timers #
 @death = Sound.new('./Sounds/death_pomodoro_pal.wav')
@@ -10,18 +9,9 @@ require 'ruby2d'
 @option_select = Sound.new('./Sounds/menu_select_pomodoro_pal.mp3')
 @feed = Sound.new('./Sounds/feed_pomodoro.wav')
 
-
 # class Timer
 #     attr_accessor :work_timer, :rest_timer
 #     def initialize(work, rest)
-#     end
-# end
-
-# class Session
-#     attr_accessor :session, :session_total
-#     def initialize(session_total)
-#         @session = 1
-#         @session_total = session_total
 #     end
 # end
 
@@ -33,13 +23,15 @@ def countdown(timer)
         system('clear')
         # puts "Session #{session} / #{session_total}"
         puts "#{seconds} seconds remaining"
+        puts " "
+        puts "Current time: " + Time.new.getlocal.strftime("%H:%M:%S")
+        puts " "
+        puts "Today is " + Time.new.getlocal.strftime("%A | %d-%m-%Y")
         sleep(1)
         seconds -= 1
         # sleep(1)
         # tick += 1
         # puts "#{tick}s"
-
-        time_now = Time.now.strftime("%s").to_i
         system('clear')
         # pastel = Pastel.new
         # complete_bar = pastel.on_cyan(" ")
@@ -86,9 +78,6 @@ def check_timer_list(timers)
         wait
     end
 end
-
-# loading(3)
-# countdown(10)
 
 # ---- notes ----
 # %M = shows the minute of the hour
