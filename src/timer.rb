@@ -5,8 +5,6 @@ require 'ruby2d'
 # Sounds for timers #
 @death = Sound.new('./Sounds/death_pomodoro_pal.wav')
 @alert = Sound.new('./Sounds/tamagotchi-alert.wav')
-@option_select = Sound.new('./Sounds/menu_select_pomodoro_pal.mp3')
-@feed = Sound.new('./Sounds/feed_pomodoro.wav')
 
 def countdown(timer)
     time_now = Time.now.strftime("%s").to_i
@@ -14,7 +12,8 @@ def countdown(timer)
     seconds = end_time.to_i - time_now.to_i
     while time_now < end_time
         system('clear')
-        puts "#{seconds} seconds remaining"
+        puts Time.at(seconds).utc.strftime("Time remaining: %M:%S")
+        #  put #{seconds} seconds remaining"
         puts " "
         puts "Current time: " + Time.new.getlocal.strftime("%H:%M:%S")
         puts " "

@@ -7,9 +7,6 @@ require 'colorize'
 require 'colorized_string'
 require 'tty-prompt'
 
-# Background music #
-@menu_song = Sound.new('./Sounds/menu_music_pomodoro_pal.mp3')
-rest_song = Music.new('./Sounds/rest_music_pomodoro_pal.mp3')
 
 # === Variables === #
 task_list = []
@@ -120,13 +117,13 @@ while @option != 5
         when 1  # Create timers
             timer = $prompt.ask("Work timer (min):", required: true) do |q|
                 q.in "0.05-59"
-                q.messages[:range?] = "%{value} isn't a good time to set. We recommend 15 minutes minimum for work."
+                q.messages[:range?] = "Now now, '%{value}' isn't a good time to set. We recommend 15 minutes minimum for work."
             end
             work_timer = timer.to_i * 60
 
             timer = $prompt.ask("Rest timer (min):", required: true) do |q|
                 q.in "0.05-59"
-                q.messages[:range?] = "%{value} isn't a good time to set. We recommend 5 minutes minimum for rest."
+                q.messages[:range?] = "Now now, '%{value}' isn't a good time to set. We recommend 5 minutes minimum for rest."
             end
             rest_timer = timer.to_i * 60
 
@@ -192,8 +189,8 @@ while @option != 5
                 # raise error if not integer
             system('clear')
             banner
-            confirm_selection(input)
-            confirm = gets.chomp.strip.upcase
+            confirm_selection(input, confirm_selection)
+            # confirm = gets.chomp.strip.upcase
 
             if confirm == "Y"
                 # Opening existing csv and selecting row

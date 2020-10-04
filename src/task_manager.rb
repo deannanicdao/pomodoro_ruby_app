@@ -1,4 +1,5 @@
 require 'csv'
+require 'ruby2d'
 
 class Task
     attr_reader :user, :title, :note, :status
@@ -76,17 +77,7 @@ def view_tasks(task_list)
     end
 end
 
-def to_csv  # Writing back to csv
-    CSV.open("tasks.csv", "w", headers: true) do |csv|
-        csv << ["id", "title", "note", "user", "status"]
-    end
 
-    CSV.open("tasks.csv", "a", col_sep: ",", headers: true, header_converters: :symbol, skip_blanks: false) do |csv|
-        remaining_rows.each do |array|
-            csv << array
-        end
-    end
-end
 
 def confirm_selection(input)
     system('clear')
@@ -121,13 +112,17 @@ def tick_task
         status = gets.chomp.downcase.strip
         if status == "x"
             status = "complete"
-        else status == "-"
+            table[input][4] = status
+            table.by_row![input][4]
+            table[input]
+        elsif status == "-"
             status = "incomplete"
+            table[input][4] = status
+            table.by_row![input][4]
+            table[input]
+        else
+            pause("Incorrect key pressed. Should be option 'x' or '-'. Returning to menu...")
         end
-
-        table[input][4] = status
-        table.by_row![input][4]
-        table[input]
 
         # Writing back to csv
         CSV.open("tasks.csv", "w", headers: true) do |csv|
