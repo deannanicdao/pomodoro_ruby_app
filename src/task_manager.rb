@@ -77,8 +77,6 @@ def view_tasks(task_list)
     end
 end
 
-
-
 def confirm_selection(input)
     system('clear')
     banner
@@ -134,9 +132,13 @@ def tick_task
                 csv << row
             end
         end
+
     when "N"
         pause("Changed your mind? Ok, returning to menu...")
+
     else
         puts "Please select a valid option: 'Y' or 'N'"
+
     end
+
 end
