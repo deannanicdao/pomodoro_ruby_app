@@ -10,7 +10,5 @@ gem "rspec", "~> 3.9"
 gem 'ruby2d'
 gem 'pastel'
 gem 'colorize'
-gem 'colorized_string'
 gem 'tty-prompt'
-
-$ bundle
+gem 'tty-font'

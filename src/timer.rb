@@ -1,6 +1,5 @@
 require 'time'
 require 'pastel'
-require 'tty-progressbar'
 require 'ruby2d'
 
 # Sounds for timers #

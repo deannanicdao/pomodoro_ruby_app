@@ -1,6 +1,6 @@
 require_relative './task_manager.rb'
 require_relative './timer.rb'
-require_relative './methods.rb'
+require_relative './main_methods.rb'
 require 'ruby2d'
 require 'pastel'
 require 'colorize'
@@ -265,6 +265,7 @@ while @option != 7
     when 6  # HELP
         help = File.open("help.txt")
         puts help.read
+        puts " "
         pause("Ain't much to it, aye. Press enter to return to menu so we can begin.")
     end
 end
