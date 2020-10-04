@@ -98,7 +98,27 @@ If the user inputs an invalid value, the screen display message will provide a h
 
 ### R8. Control Flow Diagram
 
-Look at the great diagram below.
+The entire flowchart has been separated into components (features) and are shown below.
+##### Start menu:
+![Start menu flowchart](./flowchart/flowchat_startmenu.png)
+
+##### Task manager feature - create:
+![Create task flowchart](./flowchart/flowchart_taskmanager.png)
+
+##### Task manager feature - read/update/delete:
+![Entire flowchart image](./flowchart/flowchart_taskmanagerRUD.png)
+
+##### Timer feature - create:
+![Timer create flowchart](./flowchart/flowchart_timerC.png)
+
+##### Timer feature - view:
+![Timer view flowchart](./flowchart/flowchart_timerV.png)
+
+##### Timer feature - delete:
+![Timer delete flowchart](./flowchart/flowchart_timerD.png)
+
+##### Pomodoro Session:
+![Pomodoro session flowchart](./flowchart/flowchart_pomodorosession.png)
 
 ### R9. Implementation Plan
 
