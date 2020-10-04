@@ -7,9 +7,10 @@ git_source(:github) {|repo_name| "https://github.com/deannanicdao/pomodoro_ruby_
 # gem "rails"
 
 gem "rspec", "~> 3.9"
-gem 'tty-font'
+gem 'ruby2d'
 gem 'pastel'
 gem 'colorize'
+gem 'colorized_string'
 gem 'tty-prompt'
 
 $ bundle
