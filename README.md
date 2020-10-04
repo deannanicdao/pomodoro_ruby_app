@@ -38,10 +38,10 @@ The Pomodoro Pal™ application includes three main features:
 * Automated Pomodoro sessions 
 
 Main menu:
-![Main menu preview](./screenshots/main_menu.png)
+![Main menu preview](./docs/screenshots/main_menu.png)
 
 Task lists can be edited and ticked off:
-![Viewing task list preview](./screenshots/view_tasks.png)
+![Viewing task list preview](./docs/screenshots/view_tasks.png)
 
 > <strong>Feature 1 </strong> 'Timed Pomodoro Sessions'
 >Each Pomodoro session will run a work and rest timer consecutively. The user will be notified when each timer ends and when the total numbers of sessions have been reached. 
@@ -100,28 +100,28 @@ If the user inputs an invalid value, the screen display message will provide a h
 
 The entire flowchart has been separated into components (features) and are shown below.
 ##### Flowchart Keys:
-![Start menu flowchart](./flowchart/key.png)
+![Start menu flowchart](./docs/flowchart/key.png)
 
 ##### Start menu:
-![Start menu flowchart](./flowchart/flowchat_startmenu.png)
+![Start menu flowchart](./docs/flowchart/flowchat_startmenu.png)
 
 ##### Task manager feature - create:
-![Create task flowchart](./flowchart/flowchart_taskmanager.png)
+![Create task flowchart](./docs/flowchart/flowchart_taskmanager.png)
 
 ##### Task manager feature - read/update/delete:
-![Entire flowchart image](./flowchart/flowchart_taskmanagerRUD.png)
+![Entire flowchart image](./docs/flowchart/flowchart_taskmanagerRUD.png)
 
 ##### Timer feature - create:
-![Timer create flowchart](./flowchart/flowchart_timerC.png)
+![Timer create flowchart](./docs/flowchart/flowchart_timerC.png)
 
 ##### Timer feature - view:
-![Timer view flowchart](./flowchart/flowchart_timerV.png)
+![Timer view flowchart](./docs/flowchart/flowchart_timerV.png)
 
 ##### Timer feature - delete:
-![Timer delete flowchart](./flowchart/flowchart_timerD.png)
+![Timer delete flowchart](./docs/flowchart/flowchart_timerD.png)
 
 ##### Pomodoro Session:
-![Pomodoro session flowchart](./flowchart/flowchart_pomodorosession.png)
+![Pomodoro session flowchart](./docs/flowchart/flowchart_pomodorosession.png)
 
 ### R9. Implementation Plan
 
@@ -154,9 +154,9 @@ Trello board can be accessed [here](https://trello.com/b/ksciPUpE/pomodoro-pal) 
 https://trello.com/b/ksciPUpE/pomodoro-pal 
 ```
 Preview:
-![Trello board preview](./screenshots/Trello_screenshot.png)
-![Trello activity all preview](./screenshots/trello_activity_all.png) 
-![Trello activity comments preview](./screenshots/trello_activity_comments.png)
+![Trello board preview](./docs/screenshots/Trello_screenshot.png)
+![Trello activity all preview](./docs/screenshots/trello_activity_all.png) 
+![Trello activity comments preview](./docs/screenshots/trello_activity_comments.png)
 
 
 ### R10. Help
@@ -220,4 +220,4 @@ ruby -v
 ### Application Testing
 Manual testing was implemented due to time constraints and is located in src/manual_testing.csv. See below for screenshot:
 
-![Manual testing screenshot](./screenshots/manual_testing.png)
+![Manual testing screenshot](./docs/screenshots/manual_testing.png)
