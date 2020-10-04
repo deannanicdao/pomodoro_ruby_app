@@ -170,7 +170,7 @@ while @option != 5
         
             if !File.exists?("tasks.csv")
                 CSV.open("tasks.csv", "w", headers: true) do |csv|
-                        csv << ["Title", "Note", "Status", "User"]
+                    csv << ["id", "title", "note", "user", "status"]
                 end
                 task_card(required_details)
             else
