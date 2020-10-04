@@ -16,8 +16,8 @@ end
 def main_menu   #  Present welcome screen & main menu
     system('clear')
     $prompt = TTY::Prompt.new
-    # @menu_song.play
     banner
+    
     @choices = [
         {"Begin Pomodoro session" => -> do @option = 1 end}, 
         {"Set Timers" => -> do @option = 2 end}, 
@@ -25,8 +25,10 @@ def main_menu   #  Present welcome screen & main menu
         {"Help" => -> do @option = 4 end},
         {"Exit" => -> do @option = 5 end}
     ]
+
     $prompt.select("Select an option: ", @choices)
     puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
+
 end
 
 # Farewell message

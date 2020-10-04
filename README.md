@@ -99,6 +99,9 @@ If the user inputs an invalid value, the screen display message will provide a h
 ### R8. Control Flow Diagram
 
 The entire flowchart has been separated into components (features) and are shown below.
+##### Flowchart Keys:
+![Start menu flowchart](./flowchart/key.png)
+
 ##### Start menu:
 ![Start menu flowchart](./flowchart/flowchat_startmenu.png)
 

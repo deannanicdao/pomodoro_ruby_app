@@ -13,7 +13,6 @@ def countdown(timer)
     while time_now < end_time
         system('clear')
         puts Time.at(seconds).utc.strftime("Time remaining: %M:%S")
-        #  put #{seconds} seconds remaining"
         puts " "
         puts "Current time: " + Time.new.getlocal.strftime("%H:%M:%S")
         puts " "

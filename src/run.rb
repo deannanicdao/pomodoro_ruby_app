@@ -8,19 +8,19 @@ require 'colorized_string'
 require 'tty-prompt'
 
 
-# === Variables === #
+# Variables
 task_list = []
 timers  = []
 message = "Farewell"
 seconds = 3
 
-# === Main === #
+# Main
 system('clear')
 while @option != 5
     main_menu
 
     case @option
-    when 1
+    when 1  # POMODORO SESSION
         check_timer_list(timers)
         puts ""
         if timers.empty? == false
@@ -271,3 +271,4 @@ while @option != 5
 end
 
 farewell("Goodbye for now, take care!")
+# End of program
