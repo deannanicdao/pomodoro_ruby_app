@@ -45,17 +45,10 @@ Select 'Tasks' will direct you to following options:
 - Tick off a task
     Select this option to tick/untick your tasks. The status can be toggled between 'complete' and 'incomplete'.
 
-4: Pal
-
-5: Settings
-Adjust the music volume. 
-Enable or disable the sounds.
-Enable or disable the Pal.
-
-6: Help
+5: Help
 You have clearly figured out this option which views the manual you're currently reading :)
 
-7: Exit
+6: Exit
 This will close the app. Note: Your timers won't be saved after closing the application, but your tasks and their status will be saved to 'tasks.csv'.
 
 # ----- End ----- #

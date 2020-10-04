@@ -19,7 +19,7 @@ seconds = 3
 
 # === Main === #
 system('clear')
-while @option != 7
+while @option != 5
     main_menu
 
     case @option
@@ -175,6 +175,7 @@ while @option != 7
             
         when 2    # VIEWING TASK LIST
             view_tasks(task_list)
+            pause("Press enter to return to menu...")
         
         when 3    # CHANGING TASKS
             # if File.exists?("tasks.csv") && !task_list.empty? 
@@ -257,12 +258,7 @@ while @option != 7
             puts "Please select a valid option '1', '2', '3' or '4' or '5'"
         end
         
-    when 4  # PICK A PAL
-    when 5  # SETTINGS
-        # case for music setting
-        # case for alarm setting
-        
-    when 6  # HELP
+    when 4  # HELP
         help = File.open("help.txt")
         puts help.read
         puts " "

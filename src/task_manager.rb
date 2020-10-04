@@ -65,7 +65,6 @@ def view_tasks(task_list)
                 index += 1
                 puts "#{index}. User: #{task.user.upcase} | #{task.title.upcase}: #{task.note} | Status: #{task.status.upcase}"
             end
-            pause("Press enter to return to continue...")
         else task_list.empty? == true
             puts "Your task list is empty! :o"
             pause("Press enter to return to menu")
@@ -91,8 +90,10 @@ end
 
 def confirm_selection(input)
     system('clear')
+    banner
     selected_row = CSV.read("tasks.csv")[input]
     puts "Is this the correct selection? (Y/N)"
+    puts " "
     puts "Task: #{selected_row[1].capitalize} | Note: #{selected_row[2].capitalize} | Assigned to: #{selected_row[3].upcase} | Status: #{selected_row[4].upcase}"
 end
 

@@ -22,10 +22,8 @@ def main_menu   #  Present welcome screen & main menu
         {"Begin Pomodoro session" => -> do @option = 1 end}, 
         {"Set Timers" => -> do @option = 2 end}, 
         {"Set Tasks" => -> do @option = 3 end},
-        {"Pick a Pal" => -> do @option = 4 end},
-        {"Settings" => -> do @option = 5 end},
-        {"Help" => -> do @option = 6 end},
-        {"Exit" => -> do @option = 7 end}
+        {"Help" => -> do @option = 4 end},
+        {"Exit" => -> do @option = 5 end}
     ]
     $prompt.select("Select an option: ", @choices)
     puts ($pastel.yellow.bold(" ~ ") + $pastel.white.bold(" ~ ")) * 15
