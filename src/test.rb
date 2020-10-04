@@ -1,12 +1,14 @@
-clear()
-puts "test"
+require 'tty-prompt'
 
-clear()
-puts "test"
+prompt = TTY::Prompt.new
 
+list = prompt.ask("Ingredients? (comma sep list)") do |q|
+    q.modify :int
+end
 
-clear()
-puts "test"
+list_b = prompt.ask("Ingredients? (comma sep list)") do |q|
+    q.convert -> (input) { input.split(/,\s*/) }
+end
 
-clear()
-puts "test"
+p list.to_i * 10
+p list_b

@@ -118,17 +118,24 @@ while @option != 5
         
         case @timer_option
         when 1  # Create timers
-            puts "Work timer (min):"
-            work_timer = gets.chomp.to_f * 60
-            #   raise error when work_timer != Integer or < 0
-            puts "Rest timer (min):"
-            rest_timer = gets.chomp.to_f * 60
-            #   raise error when work_timer != Integer or < 0
+            timer = $prompt.ask("Work timer (min):", required: true) do |q|
+                q.in "0.05-59"
+                q.messages[:range?] = "%{value} isn't a good time to set. We recommend 15 minutes minimum for work."
+            end
+            work_timer = timer.to_i * 60
+
+            timer = $prompt.ask("Rest timer (min):", required: true) do |q|
+                q.in "0.05-59"
+                q.messages[:range?] = "%{value} isn't a good time to set. We recommend 5 minutes minimum for rest."
+            end
+            rest_timer = timer.to_i * 60
+
             timers << [work_timer, rest_timer]
             check_timer_list(timers)
 
         when 2  # View timers
             check_timer_list(timers)
+            pause("Press enter to return to the menu...")
             
         when 3 # View then delete a selected timer
             check_timer_list(timers)
